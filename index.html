@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z3 Safety — Practical Workplace Safety for California Operations</title>
+  <link rel="icon" type="image/png" href="assets/z3-logo.png">
+  <link rel="apple-touch-icon" href="assets/z3-logo.png">
+  <meta name="theme-color" content="#0A0E14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Palette — black dominant, gold intentional */
+      --ink:           #0A0E14;
+      --ink-deep:      #050810;
+      --charcoal:      #131820;
+      --charcoal-2:    #1A2029;
+      --steel:         #2A3340;
+      --steel-light:   #4A5563;
+      --silver:        #B8BCC2;
+      --silver-light:  #D5D7DB;
+      --silver-pale:   #EEEFF1;
+
+      /* Gold — operational, not luxury */
+      --gold:          #D4A017;
+      --gold-bright:   #E8B82E;
+      --gold-deep:     #A8800F;
+      --gold-pale:     #FBF4DE;
+
+      /* Functional */
+      --white:         #FFFFFF;
+      --off-white:     #F5F6F8;
+      --gray-border:   #E1E3E7;
+      --text:          #111418;
+      --text-light:    #565E69;
+      --text-mid:      #2A3240;
+      --success:       #16A34A;
+
+      /* Gradients — toned down */
+      --grad-gold:     linear-gradient(180deg, #E8B82E 0%, #D4A017 100%);
+      --grad-gold-hover: linear-gradient(180deg, #F0C53C 0%, #DCA81E 100%);
+      --grad-dark:     linear-gradient(180deg, #0A0E14 0%, #131820 100%);
+
+      /* Shadows — industrial, defined */
+      --shadow-sm:     0 1px 2px rgba(10,14,20,0.08);
+      --shadow-md:     0 4px 12px rgba(10,14,20,0.1), 0 2px 4px rgba(10,14,20,0.06);
+      --shadow-lg:     0 12px 32px rgba(10,14,20,0.12), 0 4px 12px rgba(10,14,20,0.08);
+      --shadow-xl:     0 20px 48px rgba(10,14,20,0.16), 0 8px 16px rgba(10,14,20,0.1);
+      --shadow-gold:   0 2px 8px rgba(212,160,23,0.18);
+      --shadow-gold-lg: 0 4px 14px rgba(212,160,23,0.24);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3, h4, h5 {
+      font-family: 'Manrope', 'Inter', sans-serif;
+      font-feature-settings: 'ss01', 'cv11';
+    }
+    button { font-family: inherit; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--gold); color: var(--ink-deep); }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(10,14,20,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 76px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 14px;
+      cursor: pointer; border: none; background: none; text-align: left;
+    }
+    .nav-logo-img {
+      height: 50px; width: auto;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+      transition: transform 0.25s ease;
+    }
+    .nav-logo:hover .nav-logo-img { transform: scale(1.03); }
+    .nav-logo-text { display: flex; flex-direction: column; }
+    .nav-logo-name {
+      color: white; font-size: 17px; font-weight: 800;
+      letter-spacing: 0.6px; line-height: 1.1;
+      font-family: 'Manrope';
+    }
+    .nav-logo-sub {
+      color: var(--gold-bright); font-size: 9.5px; font-weight: 600;
+      letter-spacing: 1.8px; text-transform: uppercase; line-height: 1;
+      margin-top: 5px;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link {
+      color: rgba(255,255,255,0.72); font-size: 14px; font-weight: 500;
+      padding: 9px 16px; border-radius: 6px; cursor: pointer;
+      border: none; background: none;
+      transition: color 0.18s, background 0.18s;
+    }
+    .nav-link:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-link.active {
+      color: white;
+      background: rgba(212,160,23,0.12);
+      box-shadow: inset 0 0 0 1px rgba(212,160,23,0.3);
+    }
+    .nav-cta {
+      background: var(--grad-gold) !important;
+      color: var(--ink-deep) !important;
+      font-weight: 700; margin-left: 10px; padding: 9px 22px;
+      box-shadow: var(--shadow-gold);
+      border: 1px solid rgba(212,160,23,0.5) !important;
+      transition: all 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--grad-gold-hover) !important;
+      box-shadow: var(--shadow-gold-lg);
+    }
+
+    /* ─── PAGE SYSTEM ─── */
+    .page { display: none; min-height: 100vh; padding-top: 76px; }
+    .page.active { display: block; }
+
+    /* ─── SHARED ─── */
+    .section { padding: 88px 48px; }
+    .section-inner { max-width: 1180px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--gold-deep); margin-bottom: 14px;
+    }
+    .section-label::before {
+      content: ''; width: 24px; height: 2px;
+      background: var(--gold); border-radius: 0;
+    }
+    .section-label.on-dark { color: var(--gold-bright); }
+    .section-label.on-dark::before { background: var(--gold-bright); }
+    .section-title {
+      font-family: 'Manrope';
+      font-size: 40px; font-weight: 800; color: var(--ink);
+      letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 16px;
+      max-width: 720px;
+    }
+    .section-title.on-dark { color: white; }
+    .section-title em {
+      font-style: normal; color: var(--gold-deep);
+    }
+    .section-title.on-dark em { color: var(--gold-bright); }
+    .section-sub {
+      font-size: 16.5px; color: var(--text-light);
+      max-width: 620px; margin-bottom: 52px; line-height: 1.7;
+    }
+    .section-sub.on-dark { color: rgba(255,255,255,0.6); }
+
+    .page-hero {
+      background: var(--ink);
+      padding: 80px 48px;
+      position: relative; overflow: hidden;
+      border-bottom: 2px solid var(--gold);
+    }
+    .page-hero-inner { max-width: 1180px; margin: 0 auto; position: relative; }
+    .page-hero h1 {
+      font-family: 'Manrope';
+      font-size: 46px; font-weight: 800; color: white;
+      letter-spacing: -1.3px; line-height: 1.08; margin-bottom: 16px;
+    }
+    .page-hero h1 em { font-style: normal; color: var(--gold-bright); }
+    .page-hero p { color: rgba(255,255,255,0.62); font-size: 17px; max-width: 620px; line-height: 1.7; }
+
+    /* Buttons */
+    .btn-gold {
+      display: inline-block;
+      background: var(--grad-gold);
+      color: var(--ink-deep);
+      padding: 13px 28px;
+      border-radius: 6px;
+      font-weight: 700; font-size: 14.5px;
+      cursor: pointer; border: 1px solid rgba(168,128,15,0.6);
+      box-shadow: var(--shadow-gold);
+      transition: all 0.2s ease;
+      font-family: 'Inter'; letter-spacing: 0.2px;
+      text-decoration: none;
+    }
+    .btn-gold:hover {
+      background: var(--grad-gold-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-gold-lg);
+    }
+    .btn-outline-gold {
+      display: block; width: 100%; text-align: center;
+      border: 2px solid var(--gold); color: var(--ink);
+      padding: 11px 24px; border-radius: 6px;
+      font-weight: 700; font-size: 14px;
+      cursor: pointer; background: var(--white);
+      transition: all 0.2s;
+      font-family: 'Inter';
+    }
+    .btn-outline-gold:hover {
+      background: var(--gold); color: var(--ink-deep);
+    }
+    .btn-white-glow {
+      background: white; color: var(--ink); padding: 13px 32px;
+      border-radius: 6px; font-weight: 700; font-size: 14.5px;
+      cursor: pointer; border: 1px solid var(--gray-border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      transition: all 0.2s;
+      font-family: 'Inter';
+    }
+    .btn-white-glow:hover { transform: translateY(-1px); box-shadow: 0 12px 32px rgba(0,0,0,0.24); }
+    .btn-ghost {
+      color: rgba(255,255,255,0.78);
+      font-size: 14.5px; font-weight: 600; cursor: pointer;
+      background: none; border: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 8px;
+      transition: color 0.2s, gap 0.2s;
+      font-family: 'Inter';
+    }
+    .btn-ghost:hover { color: var(--gold-bright); gap: 12px; }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--ink);
+      padding: 80px 48px;
+      text-align: center;
+      position: relative;
+      border-top: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+    }
+    .cta-banner-inner { position: relative; max-width: 720px; margin: 0 auto; }
+    .cta-banner h2 {
+      font-family: 'Manrope';
+      font-size: 36px; font-weight: 800; color: white;
+      letter-spacing: -1px; margin-bottom: 14px; line-height: 1.12;
+    }
+    .cta-banner h2 em { font-style: normal; color: var(--gold-bright); }
+    .cta-banner p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 32px; line-height: 1.65; }
+
+    /* Footer */
+    footer {
+      background: var(--ink-deep);
+      padding: 56px 48px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-top {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 48px; padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .footer-logo-img {
+      height: 44px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .footer-logo-text { font-family: 'Manrope'; font-size: 16px; font-weight: 800; color: white; letter-spacing: 0.5px; }
+    .footer-logo-sub { font-size: 10px; color: var(--gold-bright); letter-spacing: 1.6px; text-transform: uppercase; }
+    .footer-brand-desc {
+      font-size: 13.5px; color: rgba(255,255,255,0.5);
+      line-height: 1.7; margin-bottom: 22px; max-width: 280px;
+    }
+    .footer-contact-row {
+      display: flex; flex-direction: column; gap: 8px;
+      font-size: 13.5px; color: rgba(255,255,255,0.62);
+    }
+    .footer-contact-row a { color: inherit; text-decoration: none; }
+    .footer-contact-row a:hover { color: var(--gold-bright); }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+      text-transform: uppercase; color: var(--gold-bright);
+      margin-bottom: 18px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-link {
+      font-size: 13.5px; color: rgba(255,255,255,0.55);
+      cursor: pointer; background: none; border: none;
+      text-align: left; padding: 0; transition: color 0.18s;
+      font-family: 'Inter';
+    }
+    .footer-link:hover { color: var(--gold-bright); }
+    .footer-bottom {
+      max-width: 1180px; margin: 24px auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .footer-cert {
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .footer-cert::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+    }
+
+
+    /* ═══════════════════════════════
+       HERO — industrial, grounded
+    ═══════════════════════════════ */
+    .hero {
+      background: var(--ink);
+      padding: 88px 48px 80px;
+      position: relative; overflow: hidden;
+      border-bottom: 2px solid var(--gold);
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -100px; right: -50px;
+      width: 580px; height: 580px;
+      background: radial-gradient(circle, rgba(212,160,23,0.09) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 60% 40%, black 0%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 60% 40%, black 0%, transparent 75%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1180px; margin: 0 auto; position: relative;
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(212,160,23,0.1);
+      border: 1px solid rgba(212,160,23,0.35);
+      color: var(--gold-bright);
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 4px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px;
+      background: var(--gold); border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-family: 'Manrope';
+      font-size: 56px; font-weight: 800; color: white;
+      line-height: 1.05; letter-spacing: -1.8px;
+      margin-bottom: 22px;
+    }
+    .hero h1 em {
+      font-style: normal; color: var(--gold-bright);
+    }
+    .hero-lead {
+      font-size: 18px; color: rgba(255,255,255,0.68);
+      max-width: 540px; margin-bottom: 38px; line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; gap: 18px; align-items: center;
+      flex-wrap: wrap; margin-bottom: 44px;
+    }
+    .hero-trust {
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12.5px; color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+    .hero-trust-item::before {
+      content: '✓'; color: var(--gold-bright); font-weight: 800;
+      font-size: 13px;
+    }
+
+    /* Hero visual — logo shines */
+    .hero-visual {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .hero-shield-stage {
+      position: relative;
+      width: 320px; height: 340px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
+    }
+    .hero-shield-stage::before {
+      content: ''; position: absolute;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(232,184,46,0.08) 0%, transparent 65%);
+      filter: blur(24px);
+    }
+    .hero-logo-img {
+      position: relative; z-index: 2;
+      width: 280px; height: auto;
+      filter: drop-shadow(0 14px 28px rgba(0,0,0,0.55));
+    }
+    .hero-logo-fallback {
+      position: relative; z-index: 2;
+      width: 240px; height: 280px;
+      background: linear-gradient(145deg, #1F2530 0%, #0A0E14 100%);
+      border: 2px solid var(--silver);
+      border-radius: 12px 12px 96px 12px / 12px 12px 130px 12px;
+      box-shadow:
+        0 24px 48px rgba(0,0,0,0.6),
+        0 0 32px rgba(232,184,46,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .hero-logo-fallback .lf-z { font-family: 'Manrope'; font-size: 96px; font-weight: 900; color: var(--silver-light); letter-spacing: -3px; line-height: 0.9; }
+    .hero-logo-fallback .lf-3 { font-family: 'Manrope'; font-size: 42px; font-weight: 900; color: var(--gold-bright); line-height: 0.9; margin-top: -48px; }
+    .hero-logo-fallback .lf-ribbon { background: var(--grad-gold); color: var(--ink-deep); font-family: 'Manrope'; font-size: 12px; font-weight: 800; letter-spacing: 2px; padding: 3px 18px; margin-top: 14px; }
+
+    /* Hero stat panel — flat industrial */
+    .hero-stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 22px 26px;
+      width: 100%; max-width: 380px;
+    }
+    .hero-stat-card-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--gold-bright); margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-stat-card-title::before {
+      content: ''; width: 18px; height: 2px; background: var(--gold);
+    }
+    .hero-stat-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .hero-stat-val {
+      font-family: 'Manrope';
+      font-size: 30px; font-weight: 800;
+      color: white;
+      letter-spacing: -0.8px; line-height: 1;
+    }
+    .hero-stat-lbl {
+      font-size: 11.5px; color: rgba(255,255,255,0.5);
+      margin-top: 5px; line-height: 1.4;
+    }
+
+    /* Trust bar */
+    .trust-bar {
+      background: var(--off-white);
+      border-bottom: 1px solid var(--gray-border);
+      padding: 0 48px;
+    }
+    .trust-bar-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; flex-wrap: wrap; gap: 14px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--text-mid); font-weight: 600;
+    }
+    .trust-icon {
+      width: 36px; height: 36px;
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-bottom: 2px solid var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .trust-divider { width: 1px; height: 28px; background: var(--gray-border); }
+
+    /* ─── PAIN ─── */
+    .pain-section { background: white; }
+    .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pain-card {
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 28px 26px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .pain-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .pain-card-icon {
+      font-size: 22px; margin-bottom: 14px;
+      width: 44px; height: 44px;
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pain-card-q {
+      font-family: 'Manrope';
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      margin-bottom: 12px; line-height: 1.35;
+    }
+    .pain-card-a { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+    /* ─── PILLARS ─── */
+    .pillars { background: var(--off-white); }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .pillar {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 36px 30px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pillar:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .pillar-icon {
+      width: 48px; height: 48px;
+      background: var(--ink);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+      font-size: 22px;
+      position: relative;
+    }
+    .pillar-icon::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 8px; right: 8px; height: 2px;
+      background: var(--gold);
+    }
+    .pillar h3 {
+      font-family: 'Manrope';
+      font-size: 17px; font-weight: 700; color: var(--ink);
+      margin-bottom: 12px; line-height: 1.3;
+    }
+    .pillar p {
+      font-size: 14.5px; color: var(--text-light); line-height: 1.7;
+    }
+
+    /* ─── SERVICES ─── */
+    .services-section { background: white; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .service-card {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-radius: 4px; padding: 30px 26px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+    .service-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .service-card-icon {
+      width: 52px; height: 52px;
+      background: var(--ink);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      font-size: 22px;
+      position: relative;
+    }
+    .service-card-icon::after {
+      content: ''; position: absolute;
+      bottom: -2px; left: 6px; right: 6px; height: 2px;
+      background: var(--gold);
+    }
+    .service-card h3 {
+      font-family: 'Manrope';
+      font-size: 17px; font-weight: 700; color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .service-card p {
+      font-size: 14px; color: var(--text-light); line-height: 1.65;
+    }
+    .service-card-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px;
+      font-size: 13px; font-weight: 700;
+      color: var(--gold-deep);
+      transition: gap 0.2s;
+    }
+    .service-card:hover .service-card-link { gap: 10px; }
+
+    /* ─── AED FEATURE BLOCK ─── */
+    .aed-block {
+      background: var(--ink);
+      border-radius: 8px;
+      padding: 64px 56px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+      position: relative; overflow: hidden;
+      border: 1px solid rgba(212,160,23,0.18);
+      border-left: 3px solid var(--gold);
+    }
+    .aed-block::before {
+      content: ''; position: absolute;
+      top: -150px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(212,160,23,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .aed-block-content { position: relative; z-index: 1; }
+    .aed-block-content h2 {
+      font-family: 'Manrope';
+      font-size: 34px; font-weight: 800; color: white;
+      letter-spacing: -1px; line-height: 1.12;
+      margin-bottom: 18px;
+    }
+    .aed-block-content h2 em { font-style: normal; color: var(--gold-bright); }
+    .aed-block-content > p {
+      color: rgba(255,255,255,0.65);
+      font-size: 16px; line-height: 1.75; margin-bottom: 32px;
+    }
+    .aed-pills {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .aed-pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 2px solid var(--gold);
+      border-radius: 4px;
+      padding: 18px 22px;
+      display: flex; align-items: flex-start; gap: 14px;
+      transition: background 0.2s;
+    }
+    .aed-pill:hover {
+      background: rgba(212,160,23,0.06);
+    }
+    .aed-pill-icon {
+      width: 32px; height: 32px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+      color: var(--ink-deep);
+    }
+    .aed-pill h4 {
+      font-family: 'Manrope';
+      font-size: 14.5px; font-weight: 700; color: white;
+      margin-bottom: 4px;
+    }
+    .aed-pill p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.55; margin: 0; }
+
+    /* ─── WHY OPS TEAMS CALL Z3 ─── */
+    .why-ops-section { background: var(--ink); padding: 96px 48px; position: relative; overflow: hidden; }
+    .why-ops-section::before {
+      content: ''; position: absolute; top: 0; right: 0;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(212,160,23,0.06) 0%, transparent 60%);
+    }
+    .why-ops-inner { max-width: 1180px; margin: 0 auto; position: relative; }
+    .why-ops-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 14px; margin-top: 48px;
+    }
+    .why-ops-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 18px 22px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-left: 2px solid var(--gold);
+      border-radius: 4px;
+    }
+    .why-ops-marker {
+      color: var(--gold-bright);
+      font-family: 'Manrope';
+      font-size: 13px; font-weight: 800;
+      flex-shrink: 0; margin-top: 1px;
+      letter-spacing: 0.5px;
+    }
+    .why-ops-text {
+      font-size: 14.5px; color: rgba(255,255,255,0.78);
+      line-height: 1.55;
+    }
+    .why-ops-closing {
+      margin-top: 40px;
+      padding: 28px 32px;
+      background: rgba(212,160,23,0.08);
+      border: 1px solid rgba(212,160,23,0.25);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      font-size: 16px; color: white; line-height: 1.6;
+    }
+    .why-ops-closing strong { color: var(--gold-bright); font-weight: 700; }
+
+    /* ─── PROCESS ─── */
+    .process-section { background: var(--off-white); }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; position: relative;
+      margin-top: 52px;
+    }
+    .process-steps::before {
+      content: ''; position: absolute;
+      top: 32px; left: calc(12.5% + 28px); right: calc(12.5% + 28px);
+      height: 2px;
+      background: var(--gold);
+      opacity: 0.3;
+      z-index: 0;
+    }
+    .process-step {
+      text-align: center; padding: 0 18px;
+      position: relative; z-index: 1;
+    }
+    .process-num {
+      width: 64px; height: 64px;
+      background: var(--ink);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope';
+      font-size: 24px; font-weight: 800;
+      color: var(--gold-bright);
+      margin: 0 auto 22px;
+      border: 2px solid var(--gold);
+      position: relative;
+      box-shadow: 0 6px 16px rgba(10,14,20,0.25);
+    }
+    .process-step h3 {
+      font-family: 'Manrope';
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .process-step p {
+      font-size: 13.5px; color: var(--text-light);
+      line-height: 1.65;
+    }
+
+    /* ─── ICP ─── */
+    .icp-section { background: white; }
+    .icp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .icp-left h2 {
+      font-family: 'Manrope';
+      font-size: 26px; font-weight: 800; color: var(--ink);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .icp-left p { font-size: 15px; color: var(--text-light); line-height: 1.75; margin-bottom: 24px; }
+    .icp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .icp-tag {
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      color: var(--ink);
+      font-size: 12.5px; font-weight: 600;
+      padding: 6px 13px; border-radius: 4px;
+    }
+    .icp-size-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ink); color: var(--gold-bright);
+      font-size: 13px; font-weight: 700;
+      padding: 10px 18px; border-radius: 4px;
+      border-left: 2px solid var(--gold);
+    }
+    .icp-check-list { list-style: none; }
+    .icp-check-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-border);
+      font-size: 14.5px; color: var(--text-mid); line-height: 1.55;
+    }
+    .icp-check-list li:last-child { border-bottom: none; }
+    .icp-check {
+      width: 22px; height: 22px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      color: var(--ink-deep); flex-shrink: 0;
+    }
+
+    /* ─── GOOGLE REVIEWS — horizontal marquee ─── */
+    .testimonials-section {
+      background: var(--off-white);
+      padding: 80px 0 88px;
+      overflow: hidden;
+      position: relative;
+    }
+    .reviews-header {
+      max-width: 1180px;
+      margin: 0 auto 44px;
+      padding: 0 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .reviews-rating-summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 20px;
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+    .reviews-rating-summary > svg { flex-shrink: 0; }
+    .reviews-rating-block { display: flex; flex-direction: column; }
+    .reviews-rating-stars-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 2px;
+    }
+    .reviews-rating-stars-row strong {
+      font-family: 'Manrope'; font-weight: 800;
+      color: var(--ink); font-size: 18px;
+      letter-spacing: -0.3px;
+    }
+    .reviews-rating-stars-row .stars {
+      color: var(--gold); font-size: 15px; letter-spacing: 2px;
+    }
+    .reviews-rating-summary .rating-text {
+      font-size: 10.5px; color: var(--text-light);
+      font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    }
+
+    .reviews-marquee {
+      position: relative;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+    }
+    .reviews-track {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      animation: marquee-scroll 105s linear infinite;
+      padding: 16px 24px;
+    }
+    .reviews-marquee:hover .reviews-track {
+      animation-play-state: paused;
+    }
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-50% - 10px)); }
+    }
+
+    .review-card {
+      width: 400px;
+      flex-shrink: 0;
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 24px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .review-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-avatar {
+      width: 40px; height: 40px;
+      background: var(--ink);
+      color: var(--gold-bright);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Manrope';
+      font-weight: 800; font-size: 13px;
+      flex-shrink: 0;
+      letter-spacing: 0.5px;
+    }
+    .review-meta { flex: 1; min-width: 0; }
+    .review-name {
+      font-family: 'Manrope'; font-size: 14.5px; font-weight: 700;
+      color: var(--ink); line-height: 1.2;
+    }
+    .review-role {
+      font-size: 11.5px; color: var(--text-light);
+      line-height: 1.4; margin-top: 3px;
+    }
+    .review-google-icon { flex-shrink: 0; opacity: 0.85; }
+    .review-stars {
+      color: var(--gold); font-size: 14px; letter-spacing: 2px;
+    }
+    .review-text {
+      font-size: 13.5px; color: var(--text-mid);
+      line-height: 1.65; flex: 1;
+    }
+    .review-text::before {
+      content: '"'; color: var(--gold);
+      font-family: 'Manrope'; font-weight: 800;
+      font-size: 18px; margin-right: 2px;
+    }
+    .review-text::after {
+      content: '"'; color: var(--gold);
+      font-family: 'Manrope'; font-weight: 800;
+      font-size: 18px; margin-left: 2px;
+    }
+
+    /* ─── COVERAGE ─── */
+    .coverage-section { background: white; }
+    .coverage-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .coverage-visual {
+      background: var(--ink);
+      border: 1px solid var(--gray-border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 48px 40px;
+      min-height: 360px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .coverage-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(212,160,23,0.1) 0%, transparent 65%);
+    }
+    .coverage-map-icon {
+      width: 80px; height: 80px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      margin-bottom: 22px;
+      position: relative;
+      color: var(--ink-deep);
+    }
+    .coverage-visual h3 {
+      font-family: 'Manrope';
+      font-size: 24px; font-weight: 800; color: white;
+      margin-bottom: 10px; position: relative;
+    }
+    .coverage-visual p { font-size: 14.5px; color: rgba(255,255,255,0.55); position: relative; line-height: 1.65; max-width: 320px; }
+    .coverage-areas {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .coverage-area-item {
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      border-radius: 4px;
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+      transition: all 0.2s;
+    }
+    .coverage-area-item:hover {
+      background: white;
+      border-color: var(--gold);
+    }
+    .coverage-area-item .dot {
+      width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .coverage-area-item span {
+      font-family: 'Manrope';
+      font-size: 14px; font-weight: 700; color: var(--ink);
+      display: block;
+    }
+    .coverage-area-item small {
+      font-size: 11.5px; color: var(--text-light);
+      display: block; font-family: 'Inter';
+    }
+    .coverage-note {
+      padding: 22px 24px;
+      background: var(--ink);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.65;
+    }
+    .coverage-note strong { color: var(--gold-bright); font-weight: 700; }
+
+
+    /* ════════════════════════════════
+       SERVICES PAGE
+    ════════════════════════════════ */
+    .services-full { display: flex; flex-direction: column; }
+    .service-block {
+      display: grid; grid-template-columns: 280px 1fr;
+      gap: 60px;
+      padding: 60px 0;
+      border-bottom: 1px solid var(--gray-border);
+      align-items: start;
+    }
+    .service-block:last-child { border-bottom: none; }
+    .service-num {
+      font-family: 'Manrope';
+      font-size: 12px; font-weight: 800;
+      letter-spacing: 2.2px; text-transform: uppercase;
+      color: var(--gold-deep);
+      margin-bottom: 10px;
+    }
+    .service-block-label h2 {
+      font-family: 'Manrope';
+      font-size: 24px; font-weight: 800;
+      color: var(--ink); line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .service-tag-pill {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--ink-deep);
+      font-size: 11px; font-weight: 700;
+      padding: 5px 12px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.9px;
+    }
+    .service-block-content p {
+      font-size: 16px; color: var(--text-mid);
+      line-height: 1.78; margin-bottom: 26px; max-width: 640px;
+    }
+    .service-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px 28px; margin-bottom: 24px;
+    }
+    .service-feature-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text);
+      position: relative;
+    }
+    .service-feature-item::before {
+      content: '';
+      width: 16px; height: 16px;
+      background: var(--gold);
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .service-feature-item::after {
+      content: '✓'; position: absolute;
+      left: 3px; color: var(--ink-deep);
+      font-size: 10px; font-weight: 900;
+      width: 16px; text-align: center;
+    }
+    .service-highlight {
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-top: 8px;
+      font-size: 14px; color: var(--text-mid);
+      line-height: 1.65;
+    }
+    .service-highlight strong { color: var(--ink); font-weight: 700; }
+
+
+    /* ════════════════════════════════
+       AED VANTAGE PAGE
+    ════════════════════════════════ */
+    .aed-page-hero {
+      background: var(--ink);
+      padding: 88px 48px; text-align: center;
+      position: relative; overflow: hidden;
+      border-bottom: 2px solid var(--gold);
+    }
+    .aed-page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(212,160,23,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .aed-page-hero-inner {
+      max-width: 800px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .aed-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(212,160,23,0.1);
+      border: 1px solid rgba(212,160,23,0.4);
+      color: var(--gold-bright);
+      font-size: 11.5px; font-weight: 700;
+      letter-spacing: 1.6px; text-transform: uppercase;
+      padding: 7px 16px; border-radius: 4px;
+      margin-bottom: 28px;
+    }
+    .aed-page-hero h1 {
+      font-family: 'Manrope';
+      font-size: 52px; font-weight: 800; color: white;
+      letter-spacing: -1.5px; line-height: 1.06;
+      margin-bottom: 22px;
+    }
+    .aed-page-hero h1 em {
+      font-style: normal; color: var(--gold-bright);
+    }
+    .aed-page-hero p {
+      font-size: 17.5px; color: rgba(255,255,255,0.66);
+      line-height: 1.72; margin-bottom: 36px;
+    }
+
+    .problem-section { background: var(--off-white); padding: 80px 48px; }
+    .problem-inner { max-width: 1180px; margin: 0 auto; }
+    .problem-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px; margin-top: 44px;
+    }
+    .problem-card {
+      background: white; border-radius: 4px;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      padding: 30px 26px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .problem-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .problem-stat {
+      font-family: 'Manrope';
+      font-size: 36px; font-weight: 800;
+      color: var(--gold-deep);
+      margin-bottom: 12px; line-height: 1;
+      letter-spacing: -1px;
+    }
+    .problem-card h4 {
+      font-family: 'Manrope';
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .problem-card p { font-size: 14px; color: var(--text-light); line-height: 1.65; }
+
+    .programs-section { padding: 88px 48px; }
+    .programs-inner { max-width: 1180px; margin: 0 auto; }
+    .programs-compare {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 52px;
+    }
+    .program-card {
+      background: white;
+      border: 2px solid var(--gray-border);
+      border-radius: 6px; overflow: hidden;
+      transition: all 0.25s;
+    }
+    .program-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+    }
+    .program-card.featured {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .program-card.featured::before {
+      content: 'MOST CHOSEN';
+      position: absolute; top: 14px; right: 14px;
+      background: white; color: var(--gold-deep);
+      font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
+      padding: 4px 10px; border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      z-index: 2;
+    }
+    .program-header {
+      background: var(--ink);
+      padding: 28px 32px;
+      border-bottom: 3px solid var(--gold);
+    }
+    .program-card.featured .program-header {
+      background: var(--gold);
+      border-bottom-color: var(--gold-deep);
+    }
+    .program-card.featured .program-header h3,
+    .program-card.featured .program-header p { color: var(--ink-deep); }
+    .program-card.featured .program-tier {
+      background: rgba(10,14,20,0.15);
+      color: var(--ink-deep);
+    }
+    .program-tier {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1.6px; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    .program-header h3 {
+      font-family: 'Manrope';
+      font-size: 22px; font-weight: 800; color: white;
+      letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2;
+    }
+    .program-header p { font-size: 13.5px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+    .program-body { padding: 32px; }
+    .program-who-label {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--gold-deep); margin-bottom: 8px;
+    }
+    .program-who-desc {
+      font-size: 14.5px; color: var(--ink); font-weight: 600;
+      margin-bottom: 24px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray-border);
+      line-height: 1.5;
+    }
+    .program-features { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .program-features li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: var(--text-mid); line-height: 1.55;
+    }
+    .feat-check {
+      width: 18px; height: 18px;
+      background: var(--gold);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+      font-size: 10px; font-weight: 900; color: var(--ink-deep);
+    }
+    .program-cta { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--gray-border); }
+
+    .included-section { background: var(--off-white); padding: 80px 48px; }
+    .included-inner { max-width: 1180px; margin: 0 auto; }
+    .included-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 18px; margin-top: 44px;
+    }
+    .included-item {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .included-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .included-icon {
+      width: 48px; height: 48px;
+      background: var(--ink); color: var(--gold-bright);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin: 0 auto 14px;
+    }
+    .included-item h4 {
+      font-family: 'Manrope';
+      font-size: 13.5px; font-weight: 700; color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .included-item p { font-size: 12.5px; color: var(--text-light); line-height: 1.6; }
+
+    /* FAQ */
+    .faq-section { padding: 80px 48px; }
+    .faq-inner { max-width: 780px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--gray-border);
+    }
+    .faq-q {
+      font-family: 'Manrope';
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      padding: 22px 4px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: start;
+      gap: 16px;
+    }
+    .faq-q-icon {
+      width: 26px; height: 26px; flex-shrink: 0;
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold-deep); font-size: 18px; font-weight: 600;
+      transition: all 0.25s;
+    }
+    .faq-q.open .faq-q-icon {
+      background: var(--gold);
+      color: var(--ink-deep);
+      border-color: var(--gold);
+      transform: rotate(45deg);
+    }
+    .faq-a {
+      font-size: 14.5px; color: var(--text-mid); line-height: 1.78;
+      padding: 0 4px 22px; display: none;
+    }
+    .faq-a.open { display: block; }
+
+
+    /* ════════════════════════════════
+       ABOUT PAGE
+    ════════════════════════════════ */
+    .about-hero {
+      background: var(--ink);
+      padding: 88px 48px;
+      position: relative; overflow: hidden;
+      border-bottom: 2px solid var(--gold);
+    }
+    .about-hero::before {
+      content: ''; position: absolute; top: -120px; left: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,160,23,0.1) 0%, transparent 60%);
+    }
+    .about-hero-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 64px; align-items: center;
+      position: relative;
+    }
+    .about-hero h1 {
+      font-family: 'Manrope';
+      font-size: 46px; font-weight: 800; color: white;
+      letter-spacing: -1.3px; line-height: 1.08;
+      margin-bottom: 22px;
+    }
+    .about-hero h1 em {
+      font-style: normal; color: var(--gold-bright);
+    }
+    .about-hero p {
+      font-size: 17px; color: rgba(255,255,255,0.7);
+      line-height: 1.78;
+    }
+    .about-hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 32px;
+    }
+    .about-hero-card h3 {
+      font-family: 'Manrope';
+      font-size: 11.5px; font-weight: 700; letter-spacing: 1.6px;
+      text-transform: uppercase; color: var(--gold-bright);
+      margin-bottom: 22px;
+    }
+    .about-metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-metric {
+      text-align: left; padding: 18px 20px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 4px;
+      border-left: 2px solid var(--gold);
+    }
+    .about-metric-val {
+      font-family: 'Manrope';
+      font-size: 30px; font-weight: 800;
+      color: white;
+      letter-spacing: -0.8px; line-height: 1;
+    }
+    .about-metric-lbl { font-size: 11.5px; color: rgba(255,255,255,0.5); margin-top: 6px; line-height: 1.4; }
+
+    .mission-section { background: white; padding: 88px 48px; }
+    .mission-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; max-width: 1180px; margin: 0 auto; }
+    .mission-content h2 {
+      font-family: 'Manrope';
+      font-size: 32px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.8px; margin-bottom: 22px; line-height: 1.18;
+    }
+    .mission-content h2 em { font-style: normal; color: var(--gold-deep); }
+    .mission-content p { font-size: 15.5px; color: var(--text-mid); line-height: 1.78; margin-bottom: 18px; }
+    .mission-values { display: flex; flex-direction: column; gap: 20px; }
+    .mission-value { display: flex; gap: 16px; align-items: flex-start; }
+    .mission-value-icon {
+      width: 44px; height: 44px;
+      background: var(--ink); color: var(--gold-bright);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px; flex-shrink: 0;
+      border-bottom: 2px solid var(--gold);
+    }
+    .mission-value h4 { font-family: 'Manrope'; font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .mission-value p { font-size: 13.5px; color: var(--text-light); line-height: 1.65; margin: 0; }
+
+    .why-z3-section { background: var(--off-white); padding: 80px 48px; }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; }
+    .why-card {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 32px 28px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .why-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .why-card-num {
+      font-family: 'Manrope';
+      font-size: 32px; font-weight: 800;
+      color: var(--gold-deep);
+      letter-spacing: -1px; margin-bottom: 14px;
+      line-height: 1;
+    }
+    .why-card h3 { font-family: 'Manrope'; font-size: 16.5px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .why-card p { font-size: 14px; color: var(--text-light); line-height: 1.65; }
+
+    .certifications-section { background: white; padding: 80px 48px; }
+    .cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 44px; }
+    .cert-item {
+      border: 1px solid var(--gray-border);
+      background: var(--off-white);
+      border-radius: 4px;
+      padding: 26px 22px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .cert-item:hover {
+      background: white;
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+    }
+    .cert-icon {
+      width: 52px; height: 52px;
+      background: var(--ink); color: var(--gold-bright);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin: 0 auto 14px;
+      border-bottom: 2px solid var(--gold);
+    }
+    .cert-item h4 { font-family: 'Manrope'; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .cert-item p { font-size: 12px; color: var(--text-light); line-height: 1.55; }
+
+
+    /* ════════════════════════════════
+       CONTACT PAGE
+    ════════════════════════════════ */
+    .contact-layout {
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 64px; padding: 80px 48px;
+    }
+    .contact-info h1 {
+      font-family: 'Manrope';
+      font-size: 36px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.9px; line-height: 1.12; margin-bottom: 16px;
+    }
+    .contact-info h1 em { font-style: normal; color: var(--gold-deep); }
+    .contact-info > p { font-size: 16px; color: var(--text-mid); line-height: 1.76; margin-bottom: 36px; }
+    .contact-details { display: flex; flex-direction: column; gap: 18px; margin-bottom: 28px; }
+    .contact-detail-item { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-detail-icon {
+      width: 44px; height: 44px;
+      background: var(--ink); color: var(--gold-bright);
+      border-radius: 4px;
+      border-bottom: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .contact-detail-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 4px; }
+    .contact-detail-value { font-size: 15px; font-weight: 700; color: var(--ink); font-family: 'Manrope'; }
+    .service-area {
+      background: var(--off-white);
+      border: 1px solid var(--gray-border);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 22px; margin-bottom: 24px;
+    }
+    .service-area h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--gold-deep); margin-bottom: 14px;
+    }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-tag {
+      background: white; border: 1px solid var(--gray-border);
+      color: var(--ink); font-size: 12.5px; font-weight: 600;
+      padding: 6px 12px; border-radius: 4px;
+    }
+    .post-submit-note {
+      background: var(--ink); color: rgba(255,255,255,0.78);
+      border-left: 3px solid var(--gold);
+      border-radius: 4px; padding: 22px;
+      font-size: 14px; line-height: 1.7;
+    }
+    .post-submit-note strong { color: var(--gold-bright); font-family: 'Manrope'; }
+
+    .contact-form {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-top: 3px solid var(--gold);
+      border-radius: 4px;
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+    .contact-form h2 {
+      font-family: 'Manrope';
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      margin-bottom: 6px; letter-spacing: -0.3px;
+    }
+    .form-sub { font-size: 14px; color: var(--text-light); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 12.5px; font-weight: 700;
+      color: var(--ink); margin-bottom: 7px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 13px;
+      border: 1.5px solid var(--gray-border);
+      border-radius: 4px; font-size: 14px;
+      color: var(--text); font-family: inherit;
+      transition: border-color 0.2s; background: white;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,160,23,0.12);
+    }
+    .form-group textarea { height: 92px; resize: vertical; }
+    .form-submit {
+      background: var(--grad-gold);
+      color: var(--ink-deep);
+      width: 100%; padding: 14px;
+      border-radius: 4px;
+      font-weight: 800; font-size: 14.5px;
+      cursor: pointer; border: 1px solid rgba(168,128,15,0.6);
+      box-shadow: var(--shadow-gold);
+      transition: all 0.2s;
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+      font-family: 'Inter';
+    }
+    .form-submit:hover {
+      background: var(--grad-gold-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-gold-lg);
+    }
+    .form-privacy {
+      text-align: center; font-size: 11.5px; color: var(--text-light);
+      margin-top: 12px;
+    }
+
+    /* ─── INDUSTRIAL ICONS ─── */
+    .ic { width: 1em; height: 1em; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+    .trust-icon .ic { width: 19px; height: 19px; color: var(--gold-deep); }
+    .pain-card-icon .ic { width: 22px; height: 22px; color: var(--gold-deep); }
+    .pillar-icon .ic { width: 26px; height: 26px; color: white; }
+    .service-card-icon .ic { width: 26px; height: 26px; color: var(--gold-bright); }
+    .aed-pill-icon .ic { width: 18px; height: 18px; color: var(--ink-deep); }
+    .mission-value-icon .ic { width: 22px; height: 22px; color: var(--gold-bright); }
+    .cert-icon .ic { width: 26px; height: 26px; color: var(--gold-bright); }
+    .contact-detail-icon .ic { width: 22px; height: 22px; color: var(--gold-bright); }
+    .included-icon .ic { width: 24px; height: 24px; color: var(--gold-bright); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 880px) {
+      .reviews-track { animation-duration: 200s; }
+      .review-card { width: 320px; padding: 22px 22px 24px; }
+      .reviews-header { margin-bottom: 32px; }
+      nav { padding: 0 20px; height: 64px; }
+      .nav-logo-img { height: 42px; }
+      .page { padding-top: 64px; }
+      .hero-inner, .about-hero-inner, .mission-layout, .coverage-layout, .icp-layout, .programs-compare, .contact-layout, .aed-block { grid-template-columns: 1fr; gap: 40px; }
+      .hero, .section, .cta-banner, .problem-section, .programs-section, .included-section, .faq-section, .certifications-section, .why-z3-section, .mission-section, .about-hero, .coverage-section, .testimonials-section, .trust-bar, .aed-page-hero, .why-ops-section { padding: 56px 24px; }
+      .hero h1 { font-size: 36px; }
+      .aed-page-hero h1, .about-hero h1, .page-hero h1 { font-size: 34px; }
+      .section-title { font-size: 28px; }
+      .cta-banner h2 { font-size: 26px; }
+      .pillars-grid, .services-grid, .pain-grid, .problem-cards, .included-grid, .cert-grid, .why-grid, .testimonials-grid, .process-steps, .why-ops-grid { grid-template-columns: 1fr; }
+      .service-block { grid-template-columns: 1fr; gap: 18px; }
+      .service-features, .form-row, .hero-stat-row, .about-metric-row, .coverage-areas { grid-template-columns: 1fr; }
+      .process-steps::before { display: none; }
+      .aed-block { padding: 40px 28px; gap: 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .hero-shield-stage { width: 280px; height: 280px; }
+      .hero-logo-img { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<!--
+═══════════════════════════════════════════════════════════════════════
+  PHOTOGRAPHY BRIEF — REAL IMAGERY DIRECTION (LAUNCH REQUIREMENT)
+═══════════════════════════════════════════════════════════════════════
+  Before launch, replace placeholder sections with real photography.
+  All imagery should be authentic, slightly gritty, industrial — shot
+  on actual California operations, with the actual Z3 team if possible.
+
+  STYLE
+  - Warm grayscale or muted color grade
+  - Natural lighting (warehouse, facility floor, parking lot)
+  - Action-oriented, not staged
+  - People in PPE / work clothes — not office attire
+  - Real signage, real cabinets, real AEDs visible
+
+  AVOID
+  - Smiling office stock
+  - Polished boardroom shots
+  - Startup or agency-style portraits
+  - White-background isolated product photos
+  - Generic safety stock libraries (Shutterstock/Adobe)
+
+  REQUIRED SHOTS BY PLACEMENT
+  ───────────────────────────────────────────────────────────────────
+  [HOME / hero]              Optional faint warehouse aisle bg @ 8-12%
+                              or AED inspection in progress
+  [HOME / pain section]      Operational close-ups: dusty cabinet,
+                              expired pad, a binder, a shift roster
+  [HOME / pillars]           Trainer demonstrating CPR on facility floor
+  [HOME / services grid]     Tight crops: hands stocking a cabinet, a
+                              technician at an AED, a hard hat in motion
+  [HOME / AED feature]       QR code scan in progress on phone next to
+                              an AED unit
+  [HOME / why-ops]           Wide shot of facility floor or warehouse
+                              aisles (monochrome, mid-shift)
+  [HOME / process]           Z3 rep on-site with safety/HR manager
+                              pointing at documentation
+  [HOME / ICP]               Multi-industry montage: manufacturing,
+                              warehousing, construction, distribution
+  [HOME / testimonials bg]   Faint facility silhouette
+  [HOME / coverage]          California map graphic + 1-2 ops shots
+  [ABOUT / hero]              Z3 trainer mid-conversation on the floor
+  [ABOUT / why z3]           AED inspection close-up
+  [SERVICES / 01 Training]   Hands-on CPR/AED training session
+  [SERVICES / 02 First Aid]  Cabinet being restocked, supply check
+  [SERVICES / 03 PPE]        PPE inspection, lockout/tagout walkthrough
+  [SERVICES / 04 AED]        Inspection scan + documentation
+  [SERVICES / 05 Support]    On-site walkthrough with operations team
+  [CONTACT]                  Optional — Z3 service vehicle, dispatch desk
+
+  TONE NOTES
+  - Operators in motion beat operators posed
+  - Equipment + people together beats either alone
+  - Bakersfield / Santa Maria / industrial CA setting preferred
+  - Avoid recognizable client logos unless cleared
+═══════════════════════════════════════════════════════════════════════
+-->
+
+<!-- ══════════ INDUSTRIAL ICON SPRITE ══════════ -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+  <defs>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.5L4.5 5.5v6c0 4.7 3 8.5 7.5 10 4.5-1.5 7.5-5.3 7.5-10v-6L12 2.5z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="1"/><path d="M9 8h6M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M14.5 5.5a3.5 3.5 0 0 1 5 4.5l-2.2 2.2-3.5-3.5L16 6.5a3.5 3.5 0 0 1-1.5-1z"/><path d="M11.5 9.5l-7.2 7.2a2 2 0 0 0 0 2.8l.2.2a2 2 0 0 0 2.8 0L14.5 13"/></symbol>
+    <symbol id="i-hardhat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 17.5h17"/><path d="M5 17v-3a7 7 0 0 1 14 0v3"/><path d="M9 11V7.5h6V11"/></symbol>
+    <symbol id="i-aed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 20.5s-7-4-7-10.5a4.5 4.5 0 0 1 8.3-2.5A4.5 4.5 0 0 1 19 10c0 6.5-7 10.5-7 10.5z"/><path d="M8.5 11.5h2L11.5 9l1.5 5 1.2-3h2.3"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 9l9-4.5L21 9l-9 4.5L3 9z"/><path d="M7 11v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4"/><path d="M21 9v6.5"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3" width="14" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M9 21v-3h6v3"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 3.5h3.5l1.5 5-2.5 1.5a11 11 0 0 0 6.5 6.5L15.5 14l5 1.5V19a1 1 0 0 1-1 1A16.5 16.5 0 0 1 3 4.5a1 1 0 0 1 1-1H5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="5" width="18" height="14"/><path d="M3 7l9 7 9-7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M9 3L3 5v16l6-2 6 2 6-2V3l-6 2-6-2z"/><path d="M9 3v16M15 5v16"/></symbol>
+    <symbol id="i-steth" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 3v6a4 4 0 0 0 8 0V3"/><path d="M4 3h2M11 3h2"/><path d="M9 13v3a4 4 0 0 0 8 0v-2"/><circle cx="17" cy="11" r="2"/></symbol>
+    <symbol id="i-siren" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M5 17.5h14"/><path d="M7 17.5v-4a5 5 0 0 1 10 0v4"/><path d="M12 3v2M5 7l1.5 1.5M19 7l-1.5 1.5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 20h17"/><path d="M6 16v-3M10 16V9M14 16v-5M18 16V6"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></symbol>
+    <symbol id="i-toolbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 8.5h18v11H3z"/><path d="M8 8.5V5h8v3.5M3 13h18"/></symbol>
+    <symbol id="i-branches" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="5" cy="6" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="19" cy="12" r="1.5"/><path d="M5 7.5v9M6.5 6h6c1.5 0 2.5 1.5 4 5M6.5 18h6c1.5 0 2.5-1.5 4-5"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 7v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-9l-2-2H4a1 1 0 0 0-1 1z"/></symbol>
+    <symbol id="i-firstaid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V4h8v3M10 13.5h4M12 11.5v4"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="3" width="12" height="18" rx="1"/><rect x="9" y="6" width="2.5" height="2.5" fill="currentColor" stroke="none"/><rect x="13" y="6" width="2" height="2.5" fill="currentColor" stroke="none"/><rect x="9" y="11" width="2.5" height="2" fill="currentColor" stroke="none"/><rect x="13" y="11" width="2" height="2" fill="currentColor" stroke="none"/><path d="M9 17h6"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 12l3-3 3 1 3 3 3-3 3 1 3 3-3 3-3-1-3 3-3-3-3 1-3-3z" /></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l10 17H2L12 3z"/><path d="M12 10v4M12 17v.5"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21c4 0 7-2.5 7-6.5 0-3-2-5-3-7-1 1.5-2.5 2-3 2 .5-2-1-4.5-3-6-1 5-5 6-5 11 0 4 3 6.5 7 6.5z"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M16 4h5v5M21 4l-7 7M3 4l7 7M16 20h5v-5M21 20l-7-7"/></symbol>
+    <symbol id="i-checkclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="4" width="14" height="17" rx="1"/><path d="M9 3.5h6v2H9zM8.5 12l2 2 4-4"/></symbol>
+  </defs>
+</svg>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <button class="nav-logo" onclick="showPage('home')">
+    <img src="assets/z3-logo.png" alt="Z3 Safety" class="nav-logo-img"
+         onerror="this.outerHTML='<div class=&quot;hero-logo-fallback&quot; style=&quot;width:48px;height:54px;&quot;><div class=&quot;lf-z&quot; style=&quot;font-size:24px;margin:0&quot;>Z3</div></div>'">
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">Z3 SAFETY</span>
+      <span class="nav-logo-sub">Workplace Safety · California</span>
+    </div>
+  </button>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')">Home</button>
+    <button class="nav-link" onclick="showPage('services')">Services</button>
+    <button class="nav-link" onclick="showPage('aed')">AED Vantage</button>
+    <button class="nav-link" onclick="showPage('about')">About</button>
+    <button class="nav-link nav-cta" onclick="showPage('contact')">Talk to Z3</button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HOME
+══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!--
+    HERO — Real photo recommendation:
+    Optional faint background photo behind .hero-grid-bg —
+    monochrome industrial: warehouse aisle, CPR training on facility floor,
+    AED inspection in progress. Keep at ~12% opacity behind the dark gradient.
+  -->
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">California Safety Operations · Cal/OSHA</div>
+        <h1>We Don't Train for Compliance.<br>We Train for <em>Reality.</em></h1>
+        <p class="hero-lead">Practical safety systems for California operations — training, AEDs, first aid, and readiness support, delivered on-site by a local team that picks up the phone.</p>
+        <div class="hero-actions">
+          <button class="btn-gold" onclick="showPage('contact')">Schedule a Site Walkthrough</button>
+          <button class="btn-ghost" onclick="showPage('services')">See What We Do →</button>
+        </div>
+        <div class="hero-trust">
+          <span class="hero-trust-item">Cal/OSHA Title 8</span>
+          <span class="hero-trust-item">AHA Certified</span>
+          <span class="hero-trust-item">On-Site Service</span>
+          <span class="hero-trust-item">Same-Day Response</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-shield-stage">
+          <img src="assets/z3-logo.png" alt="Z3 Safety" class="hero-logo-img"
+               onerror="this.outerHTML='<div class=&quot;hero-logo-fallback&quot;><div class=&quot;lf-z&quot;>Z</div><div class=&quot;lf-3&quot;>3</div><div class=&quot;lf-ribbon&quot;>SAFETY</div></div>'">
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-card-title">Operational Coverage</div>
+          <div class="hero-stat-row">
+            <div>
+              <div class="hero-stat-val">100+</div>
+              <div class="hero-stat-lbl">California operators we work with</div>
+            </div>
+            <div>
+              <div class="hero-stat-val">5</div>
+              <div class="hero-stat-lbl">Service pillars, one partner</div>
+            </div>
+            <div>
+              <div class="hero-stat-val">2</div>
+              <div class="hero-stat-lbl">AED Vantage tiers</div>
+            </div>
+            <div>
+              <div class="hero-stat-val">24h</div>
+              <div class="hero-stat-lbl">Same-day response</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-building"/></svg></div>Cal/OSHA Title 8</div>
+      <div class="trust-divider"></div>
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-checkclip"/></svg></div>Audit-Ready Records</div>
+      <div class="trust-divider"></div>
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-aed"/></svg></div>AED Rescue-Ready</div>
+      <div class="trust-divider"></div>
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-steth"/></svg></div>Medical Direction</div>
+      <div class="trust-divider"></div>
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-pin"/></svg></div>On-Site Walkthroughs</div>
+    </div>
+  </div>
+
+  <!-- Pain Section -->
+  <section class="section pain-section">
+    <div class="section-inner">
+      <div class="section-label">Sound Familiar?</div>
+      <h2 class="section-title">The safety gaps most operators<br>don't talk about.</h2>
+      <p class="section-sub">What we hear from California safety, HR, and ops leaders every week.</p>
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-folder"/></svg></div>
+          <div class="pain-card-q">"Training records live in three spreadsheets. None of them are current."</div>
+          <div class="pain-card-a">Documentation gaps are the first thing auditors find. We pull records into one log, track refreshers, and keep the audit trail current by default.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-aed"/></svg></div>
+          <div class="pain-card-q">"We've had AEDs on the floor for years. No idea if the pads are expired."</div>
+          <div class="pain-card-a">Pads expire. Batteries drain. Responders move on. AED Vantage handles inspection, documentation, and consumable tracking — every device, every month.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-cap"/></svg></div>
+          <div class="pain-card-q">"We did CPR training a while back. Half those folks don't work here anymore."</div>
+          <div class="pain-card-a">Shift turnover drifts coverage. We schedule on-site refreshers, track who's certified, and flag lapses before they happen.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-firstaid"/></svg></div>
+          <div class="pain-card-q">"First aid cabinets get refilled when someone notices something's missing."</div>
+          <div class="pain-card-a">Cal/OSHA requires specific cabinet configurations by industry. We service them on a schedule, verify compliance, document every visit.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-trend"/></svg></div>
+          <div class="pain-card-q">"Workers' comp keeps creeping up. Had a few too many near-misses to ignore."</div>
+          <div class="pain-card-a">Most workers' comp pressure traces back to training, documentation, or response gaps. A walkthrough usually surfaces it in under an hour.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon"><svg class="ic"><use href="#i-shuffle"/></svg></div>
+          <div class="pain-card-q">"One vendor for training. Another for AEDs. A third for cabinets. Nothing connects."</div>
+          <div class="pain-card-a">Fragmented vendors create documentation gaps and coordination headaches. We cover all of it — one partner, one contact, one audit trail.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="section pillars">
+    <div class="section-inner">
+      <div class="section-label">How We Work</div>
+      <h2 class="section-title">We don't sell safety.<br>We build the systems that keep operations <em>ready.</em></h2>
+      <p class="section-sub">Most vendors deliver a training and disappear. We build the operational backbone — documentation, scheduling, inspections, training cadence — that keeps your safety program running when no one's watching.</p>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-icon"><svg class="ic"><use href="#i-shield"/></svg></div>
+          <h3>Prevent Incidents Before They Happen</h3>
+          <p>Structured training, on-site walkthroughs, and clear documentation close the gaps that lead to citations, claims, and downtime.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg class="ic"><use href="#i-checkclip"/></svg></div>
+          <h3>Documentation That Holds Up</h3>
+          <p>Cal/OSHA is unforgiving. We maintain training records, inspection logs, and the audit trail so you're ready when an auditor walks in — not scrambling the week before.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><svg class="ic"><use href="#i-tools"/></svg></div>
+          <h3>One Partner. Five Service Lines.</h3>
+          <p>Training, first aid, AEDs, safety products, and ongoing support — one contact, one schedule, one audit trail. Not five vendors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section services-section">
+    <div class="section-inner">
+      <div class="section-label">What We Cover</div>
+      <h2 class="section-title">Five service lines.<br>One partner.</h2>
+      <p class="section-sub">Training. AEDs. First aid. PPE. Ongoing safety support.</p>
+      <div class="services-grid">
+        <div class="service-card" onclick="showPage('services')">
+          <div class="service-card-icon"><svg class="ic"><use href="#i-cap"/></svg></div>
+          <h3>Safety Training</h3>
+          <p>On-site CPR, First Aid, OSHA 10/30, and industry-specific certifications. Delivered at your facility. Records you can find when you need them.</p>
+          <span class="service-card-link">Training programs →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="service-card-icon"><svg class="ic"><use href="#i-firstaid"/></svg></div>
+          <h3>First Aid Service</h3>
+          <p>Scheduled cabinet service, Cal/OSHA-compliant stocking, multi-location coordination. Your team isn't chasing supplies.</p>
+          <span class="service-card-link">First aid service →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="service-card-icon"><svg class="ic"><use href="#i-hardhat"/></svg></div>
+          <h3>Safety Products &amp; PPE</h3>
+          <p>PPE, signage, lockout/tagout, hazmat labeling — sourced for your industry and California Title 8. No catalog guessing.</p>
+          <span class="service-card-link">Products →</span>
+        </div>
+        <div class="service-card" onclick="showPage('aed')">
+          <div class="service-card-icon"><svg class="ic"><use href="#i-aed"/></svg></div>
+          <h3>AED Compliance &amp; Management</h3>
+          <p>AED Vantage — two tiers covering monthly inspection, documentation, medical direction, and post-event support. Devices stay rescue-ready.</p>
+          <span class="service-card-link">See AED Vantage →</span>
+        </div>
+        <div class="service-card" onclick="showPage('services')">
+          <div class="service-card-icon"><svg class="ic"><use href="#i-building"/></svg></div>
+          <h3>Workplace Safety Support</h3>
+          <p>Site walkthroughs, Emergency Action Plans, disaster planning, and ongoing advisory as your operation grows or rules shift.</p>
+          <span class="service-card-link">Support services →</span>
+        </div>
+        <div class="service-card" onclick="showPage('contact')" style="border-color:var(--gold); background:var(--off-white);">
+          <div class="service-card-icon" style="background:var(--gold); color:var(--ink-deep);"><svg class="ic"><use href="#i-pin"/></svg></div>
+          <h3>Free Site Walkthrough</h3>
+          <p>On-site. Confidential. Under an hour. We'll show you where your program stands — and what's worth fixing first.</p>
+          <span class="service-card-link" style="color:var(--ink)">Schedule now →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AED Feature -->
+  <section class="section" style="background:white;">
+    <div class="section-inner">
+      <div class="aed-block">
+        <div class="aed-block-content">
+          <div class="section-label on-dark">Flagship Program</div>
+          <h2>AED Vantage:<br><em>Rescue Ready.</em><br>Every Month.</h2>
+          <p>Pads expire. Batteries drain. Responders move on. Most operations don't find out until they need the device. AED Vantage handles inspection, documentation, and consumable tracking — two service tiers built around your team's capacity.</p>
+          <button class="btn-gold" onclick="showPage('aed')">See AED Vantage →</button>
+        </div>
+        <div class="aed-pills">
+          <div class="aed-pill">
+            <div class="aed-pill-icon"><svg class="ic"><use href="#i-qr"/></svg></div>
+            <div>
+              <h4>Program 1 — Self-Inspection</h4>
+              <p>Your team inspects via QR. We manage documentation, compliance tracking, reports, and consumable alerts.</p>
+            </div>
+          </div>
+          <div class="aed-pill">
+            <div class="aed-pill-icon"><svg class="ic"><use href="#i-tools"/></svg></div>
+            <div>
+              <h4>Program 2 — On-Site Inspection</h4>
+              <p>We come to your facility monthly. Perform every inspection. Handle all documentation. Zero internal burden.</p>
+            </div>
+          </div>
+          <div class="aed-pill">
+            <div class="aed-pill-icon"><svg class="ic"><use href="#i-chart"/></svg></div>
+            <div>
+              <h4>Both Programs Include</h4>
+              <p>Medical direction, local agency notification, monthly reports, post-event support.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    REAL PHOTO RECOMMENDATIONS for visual texture:
+    - Trainer running CPR/AED training (on-site, facility floor)
+    - AED inspection in progress (technician with QR code phone)
+    - Warehouse walkthrough (Z3 rep + facilities manager pointing at signage)
+    - First aid cabinet service (technician restocking)
+    - PPE / lockout-tagout audit
+    Keep imagery monochrome or warm-grayscale. Avoid stock smiling office shots.
+  -->
+  <!-- Why Operations Teams Call Z3 -->
+  <section class="why-ops-section">
+    <div class="why-ops-inner">
+      <div class="section-label on-dark">Why Operations Teams Call Z3</div>
+      <h2 class="section-title on-dark">When safety programs are scattered across five vendors<br>and three spreadsheets — <em>we get the call.</em></h2>
+      <p class="section-sub on-dark">What we routinely consolidate into one operational system:</p>
+      <div class="why-ops-grid">
+        <div class="why-ops-item"><span class="why-ops-marker">01</span><span class="why-ops-text">Training records scattered across spreadsheets, binders, and old emails</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">02</span><span class="why-ops-text">AEDs maintained by no one in particular — until an inspector shows up</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">03</span><span class="why-ops-text">Three vendors, no coordination, no single point of contact</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">04</span><span class="why-ops-text">Audit documentation assembled the week of</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">05</span><span class="why-ops-text">Workers' comp creeping up with no clear root cause</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">06</span><span class="why-ops-text">Safety split across HR, ops, and facilities — owned by no one</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">07</span><span class="why-ops-text">Shift turnover eating into certified coverage faster than refreshers</span></div>
+        <div class="why-ops-item"><span class="why-ops-marker">08</span><span class="why-ops-text">Headcount grew faster than the safety program could keep up</span></div>
+      </div>
+      <div class="why-ops-closing">
+        <strong>We consolidate it into one system.</strong> One partner. One contact. One audit trail. Built around how your floor actually runs — not how a binder says it should.
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process-section">
+    <div class="section-inner">
+      <div class="section-label">How We Work With You</div>
+      <h2 class="section-title">From first call to fully covered —<br>in four steps.</h2>
+      <p class="section-sub">No long sales cycle. We move at operational pace — fast enough to be useful, methodical enough to do it right.</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="process-num">1</div>
+          <h3>Site Walkthrough</h3>
+          <p>We come to your facility. Look at training records, AEDs, first aid cabinets, documentation. Surface the gaps. No commitment.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">2</div>
+          <h3>Practical Plan</h3>
+          <p>We build a program for your operation — size, industry, Cal/OSHA requirements. You review every detail before we move.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">3</div>
+          <h3>Fast Implementation</h3>
+          <p>Training scheduled. AEDs compliant. Cabinets stocked. Documentation set up. We coordinate so your floor keeps running.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">4</div>
+          <h3>Ongoing Partnership</h3>
+          <p>Monthly reporting. Scheduled service. Refresher tracking. Responsive support when something changes — on your floor or in the regs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ICP -->
+  <section class="section icp-section">
+    <div class="section-inner">
+      <div class="section-label">Who We Serve</div>
+      <h2 class="section-title">Built for California operations<br>with 100–400 people.</h2>
+      <p class="section-sub">Large enough to have real Cal/OSHA exposure. Small enough that no one's built the safety infrastructure yet. That's exactly where we work best.</p>
+      <div class="icp-layout">
+        <div class="icp-left">
+          <h2>The operations we work best with</h2>
+          <p>Real Cal/OSHA pressure. Operational complexity. A safety program built reactively over the years rather than systemically. That's the gap we close — with documentation, training cadence, and integrated service that holds up under audit.</p>
+          <div class="icp-tags">
+            <span class="icp-tag">Manufacturing</span>
+            <span class="icp-tag">Warehousing &amp; Distribution</span>
+            <span class="icp-tag">Construction</span>
+            <span class="icp-tag">Logistics</span>
+            <span class="icp-tag">Property Management</span>
+            <span class="icp-tag">Healthcare Support</span>
+            <span class="icp-tag">Food Production</span>
+            <span class="icp-tag">Facility Services</span>
+          </div>
+          <div style="margin-top:24px;">
+            <span class="icp-size-badge">Sweet spot — 100–200 employees</span>
+          </div>
+        </div>
+        <div>
+          <ul class="icp-check-list">
+            <li><span class="icp-check">✓</span><span><strong>Safety Managers</strong> who need one partner instead of five vendors</span></li>
+            <li><span class="icp-check">✓</span><span><strong>HR Leaders</strong> carrying safety duties without dedicated headcount</span></li>
+            <li><span class="icp-check">✓</span><span><strong>Facilities Managers</strong> who need reliable, scheduled service that shows up</span></li>
+            <li><span class="icp-check">✓</span><span><strong>Operations Leaders</strong> focused on reducing incident-related downtime</span></li>
+            <li><span class="icp-check">✓</span><span><strong>CFOs &amp; Controllers</strong> watching workers' comp creep up</span></li>
+            <li><span class="icp-check">✓</span><span><strong>Teams post-incident</strong> cleaning up after a near-miss or audit finding</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Reviews -->
+  <section class="testimonials-section">
+    <div class="reviews-header">
+      <div>
+        <div class="section-label">Google Reviews</div>
+        <h2 class="section-title">Five-star ratings from California<br>operations teams.</h2>
+      </div>
+      <div class="reviews-rating-summary">
+        <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Google">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        <div class="reviews-rating-block">
+          <div class="reviews-rating-stars-row">
+            <strong>5.0</strong>
+            <span class="stars">★★★★★</span>
+          </div>
+          <div class="rating-text">Verified · Google Reviews</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-marquee">
+      <div class="reviews-track" id="reviewsTrack">
+        <!-- 10 reviews — auto-duplicated by JS for seamless loop -->
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">MR</div>
+            <div class="review-meta"><div class="review-name">Marcus R.</div><div class="review-role">Operations Manager · Manufacturing · Bakersfield</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Had two vendors for training, one for AEDs, a spreadsheet for first aid cabinets that nobody touched. Z3 came in, audited everything, consolidated it. Six months in my safety manager's spending hours less on coordination. Worth it.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">LD</div>
+            <div class="review-meta"><div class="review-name">Lisa D.</div><div class="review-role">HR Director · Distribution · Santa Maria</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Our near-miss last year made us realize we'd been winging it. Z3 built a real training schedule and the kind of documentation you can actually pull up when an auditor's standing there. They show up when they say they will. That's most of it honestly.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">TC</div>
+            <div class="review-meta"><div class="review-name">Tony C.</div><div class="review-role">Facilities Director · Property Management · SoCal</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">The walkthrough turned up three AEDs with expired pads — I had no clue. Compliant within the month. Monthly reports show up in my inbox, short and clear. I don't have to chase anyone for anything.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">KB</div>
+            <div class="review-meta"><div class="review-name">Karen B.</div><div class="review-role">Safety Manager · Food Production · Central Valley</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">One contact, one schedule, one invoice for training, first aid, AEDs. After juggling three different vendors for years, that alone was worth switching.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">EM</div>
+            <div class="review-meta"><div class="review-name">Eduardo M.</div><div class="review-role">Plant Manager · Manufacturing · Bakersfield</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">After our audit found gaps, we needed help fast. Z3 had us documented and compliant in about three weeks. No drama. No upsell. They just got it done.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">JS</div>
+            <div class="review-meta"><div class="review-name">Jennifer S.</div><div class="review-role">HR Manager · Logistics · Inland Empire</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">The walkthrough sold me. They didn't pitch — they just pointed out what was exposed. Five gaps in under an hour. We've worked with them since.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">DR</div>
+            <div class="review-meta"><div class="review-name">Daniel R.</div><div class="review-role">Operations Director · Construction · Orange County</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Most safety vendors disappear after the training day. Z3 stays in touch. When Cal/OSHA updated last year, they were the ones who called me first.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">MH</div>
+            <div class="review-meta"><div class="review-name">Maria H.</div><div class="review-role">Facilities Manager · Healthcare Support · San Diego</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Cal/OSHA Title 8 is its own thing. Z3 knows it cold. They built our program to California standards, not federal minimums. You can tell when an auditor walks through.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">BK</div>
+            <div class="review-meta"><div class="review-name">Brett K.</div><div class="review-role">CFO · Warehousing · Santa Maria</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">Workers' comp was climbing year-over-year. Z3 helped us see where the gaps actually were — training cadence, documentation, response readiness. Claims are trending the right direction now.</div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-avatar">CP</div>
+            <div class="review-meta"><div class="review-name">Connie P.</div><div class="review-role">Safety Coordinator · Food Production · Bakersfield</div></div>
+            <svg class="review-google-icon" width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">They come on-site. They follow up. AED reports just show up in my inbox every month. Program runs itself at this point — which is exactly what I needed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage -->
+  <section class="section coverage-section">
+    <div class="section-inner">
+      <div class="section-label">Where We Operate</div>
+      <h2 class="section-title">Built for California.<br>Run by <em>California.</em></h2>
+      <p class="section-sub">Central and Southern California — local enough to be responsive, structured enough to handle multi-location operations. Cal/OSHA Title 8 is what we know.</p>
+      <div class="coverage-layout">
+        <div class="coverage-visual">
+          <div class="coverage-map-icon"><svg class="ic" style="width:40px;height:40px"><use href="#i-map"/></svg></div>
+          <h3>Central &amp; Southern California</h3>
+          <p>Local service. Local relationships. Local response time.</p>
+        </div>
+        <div>
+          <div class="coverage-areas">
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Santa Maria</span><small>Primary hub</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Bakersfield</span><small>Primary hub</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Central Valley</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Los Angeles</span><small>Metro coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Orange County</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Inland Empire</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>San Diego</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Border Region</span><small>Extended coverage</small></div></div>
+          </div>
+          <div class="coverage-note">
+            <strong>Cal/OSHA Title 8 isn't federal OSHA.</strong> We know the difference — and so will your auditors. Every program we build is to California standards because California is where we operate.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <h2>See where your program <em>stands.</em></h2>
+      <p>On-site walkthrough. Under an hour. Confidential. We'll tell you what's worth fixing first — and what isn't.</p>
+      <button class="btn-white-glow" onclick="showPage('contact')">Schedule a Site Walkthrough →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/z3-logo.png" alt="Z3 Safety" class="footer-logo-img"
+               onerror="this.style.display='none'">
+          <div>
+            <div class="footer-logo-text">Z3 SAFETY</div>
+            <div class="footer-logo-sub">Workplace Safety · California</div>
+          </div>
+        </div>
+        <p class="footer-brand-desc">Practical workplace safety for California operations — training, AEDs, first aid, and ongoing support under one roof.</p>
+        <div class="footer-contact-row">
+          <div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div>
+          <div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-mail"/></svg><a href="mailto:sales@z3safety.com">sales@z3safety.com</a></div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li>
+          <li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li>
+          <li><button class="footer-link" onclick="showPage('services')">Safety Products</button></li>
+          <li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li>
+          <li><button class="footer-link" onclick="showPage('services')">Workplace Support</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><button class="footer-link" onclick="showPage('about')">About Z3</button></li>
+          <li><button class="footer-link" onclick="showPage('contact')">Contact</button></li>
+          <li><button class="footer-link" onclick="showPage('contact')">Schedule a Walkthrough</button></li>
+          <li><button class="footer-link">Lunch &amp; Learn</button></li>
+          <li><button class="footer-link">New Business Program</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Service Area</div>
+        <ul class="footer-links">
+          <li><button class="footer-link">Santa Maria</button></li>
+          <li><button class="footer-link">Bakersfield</button></li>
+          <li><button class="footer-link">Greater Los Angeles</button></li>
+          <li><button class="footer-link">Orange County &amp; IE</button></li>
+          <li><button class="footer-link">San Diego &amp; Border</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Z3 Safety — Practical workplace safety, California operations</div>
+      <div class="footer-cert">Cal/OSHA Title 8 · AHA Certified · AED Vantage</div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="section-label on-dark">Our Services</div>
+      <h1>Five Service Lines.<br>One <em>Operational Partner.</em></h1>
+      <p>Training your workforce. Stocking your facilities. Maintaining your AEDs. Sourcing your PPE. Backing your safety program. Z3 covers the full operational scope of workplace safety in California.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="services-full">
+
+        <div class="service-block">
+          <div>
+            <div class="service-num">01 ─ Pillar One</div>
+            <h2>Safety Training</h2>
+            <span class="service-tag-pill">Workforce Readiness</span>
+          </div>
+          <div class="service-block-content">
+            <p>Most safety training fails because it's treated as a checkbox. We build training that creates real workforce readiness — structured, repeatable, and documented to Cal/OSHA standards. CPR/AED, OSHA 10 and 30, industry-specific. We bring it to your facility, on your schedule.</p>
+            <div class="service-features">
+              <div class="service-feature-item">CPR / AED Certification</div>
+              <div class="service-feature-item">OSHA 10 &amp; 30</div>
+              <div class="service-feature-item">First Aid Responder</div>
+              <div class="service-feature-item">Bloodborne Pathogens</div>
+              <div class="service-feature-item">Lunch &amp; Learn Series</div>
+              <div class="service-feature-item">Forklift / Lockout-Tagout</div>
+              <div class="service-feature-item">On-site delivery</div>
+              <div class="service-feature-item">Full documentation</div>
+              <div class="service-feature-item">Refresher tracking</div>
+              <div class="service-feature-item">Cal/OSHA aligned</div>
+            </div>
+            <div class="service-highlight"><strong>The difference:</strong> Every training engagement includes documentation that meets Cal/OSHA recordkeeping — not just a sign-in sheet.</div>
+          </div>
+        </div>
+
+        <div class="service-block">
+          <div>
+            <div class="service-num">02 ─ Pillar Two</div>
+            <h2>First Aid Service</h2>
+            <span class="service-tag-pill">Facility Readiness</span>
+          </div>
+          <div class="service-block-content">
+            <p>A stocked first aid cabinet only matters if it's stocked to Cal/OSHA standards for your specific industry. We service first aid programs on a schedule — restocking, compliance verification, and cabinet configuration. You handle operations. We handle readiness.</p>
+            <div class="service-features">
+              <div class="service-feature-item">Cabinet supply &amp; stocking</div>
+              <div class="service-feature-item">Cal/OSHA verification</div>
+              <div class="service-feature-item">Scheduled service visits</div>
+              <div class="service-feature-item">Multi-location coordination</div>
+              <div class="service-feature-item">Inventory tracking</div>
+              <div class="service-feature-item">Custom kit configurations</div>
+              <div class="service-feature-item">Industry-specific kits</div>
+              <div class="service-feature-item">Eyewash station service</div>
+            </div>
+            <div class="service-highlight"><strong>The difference:</strong> We configure cabinets to your industry and Cal/OSHA title — not a generic kit.</div>
+          </div>
+        </div>
+
+        <div class="service-block">
+          <div>
+            <div class="service-num">03 ─ Pillar Three</div>
+            <h2>Safety Products &amp; PPE</h2>
+            <span class="service-tag-pill">Equipment</span>
+          </div>
+          <div class="service-block-content">
+            <p>Sourcing safety products isn't the problem. Knowing exactly what you need for Cal/OSHA is. We supply PPE, signage, safety equipment, and compliance materials aligned to your industry and California requirements. No catalog guessing. Just the right gear.</p>
+            <div class="service-features">
+              <div class="service-feature-item">PPE — gloves, eyewear, respirators</div>
+              <div class="service-feature-item">Safety signage &amp; labeling</div>
+              <div class="service-feature-item">Emergency equipment</div>
+              <div class="service-feature-item">Lockout / tagout supplies</div>
+              <div class="service-feature-item">Spill kits &amp; containment</div>
+              <div class="service-feature-item">Cal/OSHA product compliance</div>
+              <div class="service-feature-item">Industry-matched sourcing</div>
+              <div class="service-feature-item">Hazmat / chemical labeling</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-block">
+          <div>
+            <div class="service-num">04 ─ Flagship</div>
+            <h2>AED Compliance &amp; Management</h2>
+            <span class="service-tag-pill">AED Vantage</span>
+          </div>
+          <div class="service-block-content">
+            <p>AEDs are only effective when they're maintained, documented, and rescue-ready. AED Vantage is our two-tier compliance program — from guided self-inspection with full backend management, to complete on-site service. We handle medical direction, agency notification, post-event support, and all documentation.</p>
+            <div class="service-features">
+              <div class="service-feature-item">Monthly inspection management</div>
+              <div class="service-feature-item">Pad &amp; battery lifecycle</div>
+              <div class="service-feature-item">Full compliance documentation</div>
+              <div class="service-feature-item">Medical direction</div>
+              <div class="service-feature-item">Local agency notification</div>
+              <div class="service-feature-item">Monthly compliance reports</div>
+              <div class="service-feature-item">Post-cardiac event support</div>
+              <div class="service-feature-item">Two service tiers</div>
+            </div>
+            <button class="btn-gold" onclick="showPage('aed')" style="margin-top:22px">See AED Vantage Programs →</button>
+          </div>
+        </div>
+
+        <div class="service-block">
+          <div>
+            <div class="service-num">05 ─ Pillar Five</div>
+            <h2>Workplace Safety Support</h2>
+            <span class="service-tag-pill">Ongoing Partnership</span>
+          </div>
+          <div class="service-block-content">
+            <p>Some operations need a safety partner, not a vendor. We offer ongoing workplace safety support — free walkthroughs, Emergency Action Plans, disaster planning, and advisory as your operation grows or California standards shift. This is where partnership becomes infrastructure.</p>
+            <div class="service-features">
+              <div class="service-feature-item">Free on-site walkthroughs</div>
+              <div class="service-feature-item">Emergency Action Plans</div>
+              <div class="service-feature-item">Workplace disaster planning</div>
+              <div class="service-feature-item">New business startup program</div>
+              <div class="service-feature-item">Cal/OSHA regulation guidance</div>
+              <div class="service-feature-item">Heart event response planning</div>
+              <div class="service-feature-item">Safety committee support</div>
+              <div class="service-feature-item">Incident investigation</div>
+            </div>
+            <div class="service-highlight"><strong>Most common entry point:</strong> The free walkthrough — confidential, on-site, typically surfaces 3–5 actionable gaps in under an hour.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <h2>Not sure where to start?</h2>
+      <p>The walkthrough takes under an hour and surfaces what's actually exposed. No pressure.</p>
+      <button class="btn-white-glow" onclick="showPage('contact')">Schedule a Site Walkthrough →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="assets/z3-logo.png" alt="Z3 Safety" class="footer-logo-img" onerror="this.style.display='none'"><div><div class="footer-logo-text">Z3 SAFETY</div><div class="footer-logo-sub">Workplace Safety · California</div></div></div>
+        <p class="footer-brand-desc">Practical workplace safety systems for California operations.</p>
+        <div class="footer-contact-row"><div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div></div>
+      </div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li><li><button class="footer-link" onclick="showPage('services')">Safety Products</button></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li><li><button class="footer-link" onclick="showPage('contact')">Walkthrough</button></li></ul></div>
+      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Los Angeles</button></li><li><button class="footer-link">Orange County</button></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div><div class="footer-cert">Cal/OSHA Title 8</div></div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     AED VANTAGE
+══════════════════════════════════════════ -->
+<div class="page" id="page-aed">
+
+  <div class="aed-page-hero">
+    <div class="aed-page-hero-inner">
+      <div class="aed-hero-badge">Z3 Flagship Program</div>
+      <h1>Stay <em>Rescue Ready.</em><br>Every Month.</h1>
+      <p>AEDs save lives — when they actually work. AED Vantage keeps your devices inspection-ready and your documentation current, with two service tiers built for how your operation actually runs.</p>
+      <button class="btn-gold" onclick="showPage('contact')">Review Your AED Program →</button>
+    </div>
+  </div>
+
+  <div class="problem-section">
+    <div class="problem-inner">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title" style="max-width:100%">Why most AED programs fail<br>between inspections.</h2>
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-stat">68%</div>
+          <h4>AEDs found non-compliant during audits</h4>
+          <p>Industry data shows most workplace AEDs have expired pads, drained batteries, or missing documentation when audited — usually without the employer knowing.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-stat">→</div>
+          <h4>Trained responders move on</h4>
+          <p>The AED-certified employees you trained 18 months ago may not be in the building anymore. Without continuous tracking, coverage gaps go unnoticed.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-stat">$$$</div>
+          <h4>Documentation gaps create liability</h4>
+          <p>After a cardiac event, regulators and legal teams want inspection records. Without consistent documentation, you can't prove readiness — even if the device worked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="programs-section">
+    <div class="programs-inner">
+      <div class="section-label">The Solution</div>
+      <h2 class="section-title">Two programs. One mission:<br><em>rescue-ready</em> compliance.</h2>
+      <p class="section-sub">Choose the tier that fits your team's capacity. Both programs deliver the same outcome: fully documented, audit-ready AED compliance — with Z3 handling the backend.</p>
+      <div class="programs-compare">
+        <div class="program-card">
+          <div class="program-header">
+            <div class="program-tier">Program 1</div>
+            <h3>AED Vantage<br>Self-Inspection</h3>
+            <p>Your team does the monthly walk. Z3 runs the compliance backend.</p>
+          </div>
+          <div class="program-body">
+            <div class="program-who-label">Best for</div>
+            <div class="program-who-desc">Operations with facilities staff capacity to perform monthly on-site inspections</div>
+            <ul class="program-features">
+              <li><span class="feat-check">✓</span><span>QR code-based inspection via any smartphone</span></li>
+              <li><span class="feat-check">✓</span><span>Z3 manages all compliance documentation</span></li>
+              <li><span class="feat-check">✓</span><span>Automated monthly compliance reports</span></li>
+              <li><span class="feat-check">✓</span><span>Email alerts for expiring pads, batteries, and lapsed certifications</span></li>
+              <li><span class="feat-check">✓</span><span>Rescue Ready Status confirmed after every inspection</span></li>
+              <li><span class="feat-check">✓</span><span>Policy and procedure development support</span></li>
+              <li><span class="feat-check">✓</span><span>Medical direction and local agency notification</span></li>
+              <li><span class="feat-check">✓</span><span>Post-cardiac event support</span></li>
+            </ul>
+            <div class="program-cta"><button class="btn-outline-gold" onclick="showPage('contact')">Request Program Details</button></div>
+          </div>
+        </div>
+        <div class="program-card featured">
+          <div class="program-header">
+            <div class="program-tier">Program 2</div>
+            <h3>AED Vantage<br>On-Site Inspection</h3>
+            <p>Z3 comes to your facility. We handle everything.</p>
+          </div>
+          <div class="program-body">
+            <div class="program-who-label">Best for</div>
+            <div class="program-who-desc">Operations that want fully managed AED compliance with zero internal burden</div>
+            <ul class="program-features">
+              <li><span class="feat-check">✓</span><span>Z3 technician performs all monthly on-site inspections</span></li>
+              <li><span class="feat-check">✓</span><span>Full documentation completed by Z3 — nothing on your team</span></li>
+              <li><span class="feat-check">✓</span><span>Automated monthly compliance reports</span></li>
+              <li><span class="feat-check">✓</span><span>Proactive consumable replacement before expiration</span></li>
+              <li><span class="feat-check">✓</span><span>Rescue Ready Status confirmed and documented each visit</span></li>
+              <li><span class="feat-check">✓</span><span>Policy and procedure development support</span></li>
+              <li><span class="feat-check">✓</span><span>Medical direction and local agency notification</span></li>
+              <li><span class="feat-check">✓</span><span>Post-cardiac event support</span></li>
+            </ul>
+            <div class="program-cta"><button class="btn-gold" style="width:100%; text-align:center;" onclick="showPage('contact')">Request Program Details</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="included-section">
+    <div class="included-inner">
+      <div class="section-label">What's Covered</div>
+      <h2 class="section-title">Both programs include full-spectrum<br>compliance support.</h2>
+      <div class="included-grid">
+        <div class="included-item"><div class="included-icon"><svg class="ic"><use href="#i-chart"/></svg></div><h4>Monthly Compliance Reports</h4><p>Automated monthly reporting — your audit trail stays current</p></div>
+        <div class="included-item"><div class="included-icon"><svg class="ic"><use href="#i-steth"/></svg></div><h4>Medical Direction</h4><p>Physician oversight for your AED program as California requires</p></div>
+        <div class="included-item"><div class="included-icon"><svg class="ic"><use href="#i-siren"/></svg></div><h4>Local Agency Notification</h4><p>We coordinate notifications to local EMS and fire on your behalf</p></div>
+        <div class="included-item"><div class="included-icon"><svg class="ic"><use href="#i-aed"/></svg></div><h4>Post-Event Support</h4><p>If a device is deployed, we provide immediate replacement and follow-up</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-inner">
+      <div class="section-label" style="display:flex; justify-content:center; margin-bottom:14px">Common Questions</div>
+      <h2 class="section-title" style="text-align:center; max-width:100%; margin: 0 auto 44px">AED Vantage <em>FAQ</em></h2>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>How often are AEDs required to be inspected in California?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">California Health &amp; Safety Code requires monthly AED inspections. Both AED Vantage programs are built around that monthly cadence — ensuring you meet the requirement every month, with documentation to prove it.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>What's the difference between Program 1 and Program 2?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">In Program 1 (Self-Inspection), your team performs the monthly walk-through using our QR code system — Z3 handles all documentation, reporting, and compliance tracking. In Program 2 (On-Site Inspection), Z3 technicians come to your facility monthly and perform everything. You get the reports either way.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>What happens if our AED is used in a cardiac event?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">Both programs include post-cardiac event support. Z3 provides immediate device replacement, assists with incident documentation, and supports post-event regulatory requirements. You're not on your own if a device is ever deployed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Does Z3 handle the medical director requirement?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">Yes. California requires a licensed physician to serve as medical director for AED programs. Both Vantage programs include medical direction as part of the service — you don't source it separately.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>Can Z3 assess our current AED program before we commit?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">Yes. We offer a free, confidential AED program assessment — we review your device inventory, inspection history, documentation, and coverage gaps. No obligation. Most assessments take under an hour on-site.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span>What's your service territory?</span><div class="faq-q-icon">+</div></div>
+        <div class="faq-a">Central and Southern California — Santa Maria, Bakersfield, Greater Los Angeles, Orange County, Inland Empire, San Diego, and the border region. On-site service is what we do.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <h2>Is your AED program <em>actually</em> ready?</h2>
+      <p>Most aren't. We'll review your current program — devices, pads, batteries, documentation, coverage — and tell you straight where the gaps are.</p>
+      <button class="btn-white-glow" onclick="showPage('contact')">Review Your AED Program →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="assets/z3-logo.png" alt="Z3 Safety" class="footer-logo-img" onerror="this.style.display='none'"><div><div class="footer-logo-text">Z3 SAFETY</div><div class="footer-logo-sub">Workplace Safety · California</div></div></div>
+        <p class="footer-brand-desc">Practical workplace safety systems for California operations.</p>
+        <div class="footer-contact-row"><div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div></div>
+      </div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li></ul></div>
+      <div><div class="footer-col-title">Areas Served</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div><div class="footer-cert">AED Vantage</div></div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════ -->
+<div class="page" id="page-about">
+
+  <!--
+    ABOUT HERO — Recommended real photo:
+    Z3 technician/trainer on a warehouse floor or AED inspection in progress.
+    Warm grayscale. Place in the .about-hero-card area or as a faint background.
+  -->
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div>
+        <div class="section-label on-dark">About Z3 Safety</div>
+        <h1>We don't sell safety.<br>We <em>build it.</em></h1>
+        <p>We're a California safety team — based here, working here, on the floor with the people we serve. We know how fast operations move. We know what an auditor looks at. We know what shift turnover does to a training program. We show up. We answer. We follow through.</p>
+      </div>
+      <div class="about-hero-card">
+        <h3>Z3 By the Numbers</h3>
+        <div class="about-metric-row">
+          <div class="about-metric"><div class="about-metric-val">100+</div><div class="about-metric-lbl">California operations served</div></div>
+          <div class="about-metric"><div class="about-metric-val">5</div><div class="about-metric-lbl">Service pillars under one roof</div></div>
+          <div class="about-metric"><div class="about-metric-val">2</div><div class="about-metric-lbl">AED Vantage tiers</div></div>
+          <div class="about-metric"><div class="about-metric-val">24h</div><div class="about-metric-lbl">Same-day response</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="mission-section">
+    <div class="mission-layout">
+      <div class="mission-content">
+        <div class="section-label">What We Do</div>
+        <h2>Keep operations running <em>safely, efficiently, and ready.</em></h2>
+        <p>Safety, done right, doesn't slow operations down. It protects them. A workforce that's trained, a cabinet that's stocked, an AED program that's actually maintained — those things keep your floor running when something goes wrong.</p>
+        <p>We work with mid-size California operators — manufacturing, warehousing, distribution, construction, food production, property — the operations that face real Cal/OSHA exposure but don't have the internal headcount to build out safety systems from scratch.</p>
+        <p>No national catalog. No corporate hotline. Just a California team you can call.</p>
+      </div>
+      <div class="mission-values">
+        <div class="section-label" style="margin-bottom:20px">How We Operate</div>
+        <div class="mission-value">
+          <div class="mission-value-icon"><svg class="ic"><use href="#i-phone"/></svg></div>
+          <div><h4>We answer the phone</h4><p>Same-day callback. Safety questions don't wait three business days.</p></div>
+        </div>
+        <div class="mission-value">
+          <div class="mission-value-icon"><svg class="ic"><use href="#i-truck"/></svg></div>
+          <div><h4>We show up on-site</h4><p>Training, inspections, walkthroughs — at your facility, on your schedule.</p></div>
+        </div>
+        <div class="mission-value">
+          <div class="mission-value-icon"><svg class="ic"><use href="#i-checkclip"/></svg></div>
+          <div><h4>We document everything</h4><p>If it's not on paper, it didn't happen. Every program leaves a clean audit trail.</p></div>
+        </div>
+        <div class="mission-value">
+          <div class="mission-value-icon"><svg class="ic"><use href="#i-toolbox"/></svg></div>
+          <div><h4>We know Cal/OSHA</h4><p>Title 8 is its own world. Federal OSHA is the floor. We work the California standard.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-z3-section">
+    <div class="section-inner">
+      <div class="section-label">Why Operations Teams Call Us</div>
+      <h2 class="section-title">Six reasons we get the call.</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-card-num">01</div>
+          <h3>We come to you</h3>
+          <p>Training, inspections, and service visits on-site at your facility. Your schedule. No off-site certification mills.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-num">02</div>
+          <h3>California-first</h3>
+          <p>We work Cal/OSHA Title 8 every day. Federal OSHA is the floor. Your auditors will know the difference.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-num">03</div>
+          <h3>One partner. Not five vendors.</h3>
+          <p>Training, first aid, AEDs, products, support. One contract. One contact. One audit trail.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-num">04</div>
+          <h3>Honest walkthroughs</h3>
+          <p>Free, no obligation. If we're not the right fit, we'll say so. No upsell games.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-num">05</div>
+          <h3>AED Vantage — not a device in a box</h3>
+          <p>Most AED "programs" are a device on a wall. Vantage is a managed compliance system — two tiers, monthly reporting, medical direction included.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-num">06</div>
+          <h3>Same-day response</h3>
+          <p>You call, you hear back. Same business day. That's the whole policy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="certifications-section">
+    <div class="section-inner">
+      <div class="section-label">Credentials &amp; Affiliations</div>
+      <h2 class="section-title">Built on credentialed <em>expertise.</em></h2>
+      <div class="cert-grid">
+        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-building"/></svg></div><h4>Cal/OSHA Title 8</h4><p>Programs built to California Title 8</p></div>
+        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-aed"/></svg></div><h4>AHA Certified</h4><p>American Heart Association CPR/AED</p></div>
+        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-steth"/></svg></div><h4>Medical Direction</h4><p>Physician-overseen AED programs</p></div>
+        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-cap"/></svg></div><h4>OSHA Outreach</h4><p>OSHA 10 &amp; 30 authorized training</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <div class="cta-banner-inner">
+      <h2>Want to <em>talk?</em></h2>
+      <p>Schedule a site walkthrough or just call us. We'll tell you where your program stands and what's worth doing first.</p>
+      <button class="btn-white-glow" onclick="showPage('contact')">Talk to Z3 →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="assets/z3-logo.png" alt="Z3 Safety" class="footer-logo-img" onerror="this.style.display='none'"><div><div class="footer-logo-text">Z3 SAFETY</div><div class="footer-logo-sub">Workplace Safety · California</div></div></div>
+        <p class="footer-brand-desc">Practical workplace safety systems for California operations.</p>
+        <div class="footer-contact-row"><div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div></div>
+      </div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li></ul></div>
+      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div></div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="section-label">Talk to Z3</div>
+      <h1>Let's review your <em>safety program.</em></h1>
+      <p>Start with a site walkthrough. We come to your facility, look at training records, AEDs, first aid cabinets, and documentation. Give you a clear picture of where you stand. No pressure. No upsell.</p>
+      <div class="contact-details">
+        <div class="contact-detail-item">
+          <div class="contact-detail-icon"><svg class="ic"><use href="#i-phone"/></svg></div>
+          <div><div class="contact-detail-label">Phone</div><div class="contact-detail-value">714.394.4070</div></div>
+        </div>
+        <div class="contact-detail-item">
+          <div class="contact-detail-icon"><svg class="ic"><use href="#i-mail"/></svg></div>
+          <div><div class="contact-detail-label">Email</div><div class="contact-detail-value">sales@z3safety.com</div></div>
+        </div>
+        <div class="contact-detail-item">
+          <div class="contact-detail-icon"><svg class="ic"><use href="#i-clock"/></svg></div>
+          <div><div class="contact-detail-label">Response Time</div><div class="contact-detail-value">Same business day</div></div>
+        </div>
+        <div class="contact-detail-item">
+          <div class="contact-detail-icon"><svg class="ic"><use href="#i-map"/></svg></div>
+          <div><div class="contact-detail-label">Service Territory</div><div class="contact-detail-value">Central &amp; Southern California</div></div>
+        </div>
+      </div>
+      <div class="service-area">
+        <h4>Primary Service Area</h4>
+        <div class="service-tags">
+          <span class="service-tag">Santa Maria</span>
+          <span class="service-tag">Bakersfield</span>
+          <span class="service-tag">Central Valley</span>
+          <span class="service-tag">Los Angeles</span>
+          <span class="service-tag">Orange County</span>
+          <span class="service-tag">Inland Empire</span>
+          <span class="service-tag">San Diego</span>
+          <span class="service-tag">Border Region</span>
+        </div>
+      </div>
+      <div class="post-submit-note">
+        <strong>What happens next:</strong><br>
+        Someone from Z3 calls or emails you back the same business day. We answer your questions, schedule a walkthrough if it makes sense. That's it.
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h2>Schedule a Site Walkthrough</h2>
+      <p class="form-sub">2 minutes to fill out. Same-day follow-up.</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Maria"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Hernandez"></div>
+      </div>
+      <div class="form-group"><label>Company</label><input type="text" placeholder="Acme Manufacturing Co."></div>
+      <div class="form-row">
+        <div class="form-group"><label>Work Email</label><input type="email" placeholder="you@company.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="(805) 555-0000"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Number of Employees</label><select><option value="">Select range</option><option>Under 100</option><option>100–200</option><option>200–400</option><option>400+</option></select></div>
+        <div class="form-group"><label>Primary Location</label><input type="text" placeholder="City, CA"></div>
+      </div>
+      <div class="form-group"><label>Your Role</label><select><option value="">Select your role</option><option>Safety Manager</option><option>HR Manager</option><option>Facilities Manager</option><option>Operations / GM</option><option>CFO / Controller</option><option>Owner / Executive</option></select></div>
+      <div class="form-group"><label>Biggest safety concern right now</label><select><option value="">Select one</option><option>Training gaps / workforce readiness</option><option>AED compliance and device readiness</option><option>Audit preparation</option><option>Documentation and recordkeeping</option><option>First aid supply management</option><option>Vendor consolidation</option><option>Workers' comp / claim trends</option><option>General walkthrough</option></select></div>
+      <div class="form-group"><label>Anything else we should know? (optional)</label><textarea placeholder="Tell us about your current setup, any recent incidents, upcoming audits, or specific challenges you're facing..."></textarea></div>
+      <button class="form-submit" onclick="alert('Submitted! (Mockup — not connected to backend)')">Send to Z3 →</button>
+      <p class="form-privacy">Confidential. Never shared. We'll be in touch the same business day.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><img src="assets/z3-logo.png" alt="Z3 Safety" class="footer-logo-img" onerror="this.style.display='none'"><div><div class="footer-logo-text">Z3 SAFETY</div><div class="footer-logo-sub">Workplace Safety · California</div></div></div>
+        <p class="footer-brand-desc">Practical workplace safety systems for California operations.</p>
+        <div class="footer-contact-row"><div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div></div>
+      </div>
+      <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('home')">Home</button></li></ul></div>
+      <div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><button class="footer-link">714.394.4070</button></li><li><button class="footer-link">sales@z3safety.com</button></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div><div class="footer-cert">Central &amp; Southern California</div></div>
+  </footer>
+</div>
+
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    const links = document.querySelectorAll('.nav-link');
+    links.forEach(l => l.classList.remove('active'));
+    const map = { home:0, services:1, aed:2, about:3 };
+    if (map[page] !== undefined) links[map[page]].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function toggleFaq(el) {
+    el.classList.toggle('open');
+    el.nextElementSibling.classList.toggle('open');
+  }
+  // Duplicate reviews track for seamless marquee loop
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('reviewsTrack');
+    if (track) track.innerHTML += track.innerHTML;
+  });
+</script>
+</body>
+</html>
