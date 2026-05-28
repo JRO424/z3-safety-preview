@@ -6,15 +6,15 @@
 
   <!-- Primary SEO -->
   <title>Z3 Safety — Practical Workplace Safety for California Operations</title>
-  <meta name="description" content="Z3 Safety builds practical workplace safety systems for California industrial operations — training, AED compliance, first aid, PPE, and ongoing support. Cal/OSHA Title 8 expertise. Same-day response. Serving Santa Maria, Bakersfield, and Southern California.">
-  <meta name="keywords" content="California workplace safety, Cal/OSHA Title 8, AED compliance, AED Vantage, CPR training, OSHA 10, OSHA 30, first aid service, safety training, PPE, workplace safety California, Bakersfield safety, Santa Maria safety">
+  <meta name="description" content="Z3 Safety builds practical workplace safety systems for California operations — Red Cross-certified training, AED compliance, First Aid, PPE, and ongoing support. Cal/OSHA Title 8 expertise. Same-day response. Serving Orange County, Coachella Valley, and Southern California.">
+  <meta name="keywords" content="California workplace safety, Cal/OSHA Title 8, AED compliance, AED Vantage, Red Cross CPR training, OSHA 10, OSHA 30, First Aid service, safety training, PPE, Orange County safety, Coachella Valley safety, Los Angeles safety, Inland Empire safety, San Diego safety">
   <meta name="author" content="Z3 Safety">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <link rel="canonical" href="https://jro424.github.io/z3-safety-preview/">
 
   <!-- Geographic targeting -->
   <meta name="geo.region" content="US-CA">
-  <meta name="geo.placename" content="Bakersfield, Santa Maria, California">
+  <meta name="geo.placename" content="Orange County, Coachella Valley, California">
   <meta name="geo.position" content="35.3733;-119.0187">
   <meta name="ICBM" content="35.3733, -119.0187">
 
@@ -78,13 +78,13 @@
         "priceRange": "$$",
         "address": {"@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US"},
         "areaServed": [
-          {"@type": "City", "name": "Santa Maria"},
-          {"@type": "City", "name": "Bakersfield"},
-          {"@type": "City", "name": "Los Angeles"},
-          {"@type": "City", "name": "San Diego"},
           {"@type": "AdministrativeArea", "name": "Orange County"},
+          {"@type": "AdministrativeArea", "name": "Coachella Valley"},
+          {"@type": "City", "name": "Santa Barbara"},
+          {"@type": "City", "name": "Ventura"},
+          {"@type": "City", "name": "Los Angeles"},
           {"@type": "AdministrativeArea", "name": "Inland Empire"},
-          {"@type": "AdministrativeArea", "name": "Central Valley"},
+          {"@type": "City", "name": "San Diego"},
           {"@type": "State", "name": "California"}
         ],
         "serviceArea": {
@@ -180,7 +180,7 @@
           {"@type": "Question", "name": "What happens if our AED is used in a cardiac event?", "acceptedAnswer": {"@type": "Answer", "text": "Both AED Vantage programs include post-cardiac event support. Z3 provides immediate device replacement and assists with incident documentation."}},
           {"@type": "Question", "name": "Does Z3 handle the medical director requirement?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. California requires a licensed physician as medical director for AED programs. Both Vantage programs include medical direction."}},
           {"@type": "Question", "name": "Can Z3 assess our current AED program before we commit?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We offer a free, confidential on-site AED program assessment. No obligation. Most assessments take under an hour."}},
-          {"@type": "Question", "name": "What is Z3 Safety's service territory?", "acceptedAnswer": {"@type": "Answer", "text": "Central and Southern California — Santa Maria, Bakersfield, Greater Los Angeles, Orange County, Inland Empire, San Diego, and the border region."}}
+          {"@type": "Question", "name": "What is Z3 Safety's service territory?", "acceptedAnswer": {"@type": "Answer", "text": "Central and Southern California, extending to the Mexican border. Primary hubs in Orange County and Coachella Valley, with full coverage across Santa Barbara, Ventura, Los Angeles, Inland Empire, and San Diego."}}
         ]
       },
       {
@@ -1778,6 +1778,54 @@
       margin-top: 12px;
     }
 
+    /* ─── TOOLTIPS (Title 8 explainer) ─── */
+    .tooltip {
+      position: relative;
+      cursor: help;
+      border-bottom: 1px dotted currentColor;
+    }
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--ink);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0;
+      text-transform: none;
+      white-space: normal;
+      width: 280px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,160,23,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 100;
+    }
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .tooltip:hover::after, .tooltip:focus::after,
+    .tooltip:hover::before, .tooltip:focus::before {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* ─── INDUSTRIAL ICONS ─── */
     .ic { width: 1em; height: 1em; flex-shrink: 0; display: inline-block; vertical-align: middle; }
     .trust-icon .ic { width: 19px; height: 19px; color: var(--gold-deep); }
@@ -2049,14 +2097,14 @@
       <div class="hero-left">
         <div class="hero-badge">California Safety Operations · Cal/OSHA</div>
         <h1>We Don't Train for Compliance.<br>We Train for <em>Reality.</em></h1>
-        <p class="hero-lead">Practical safety systems for California operations — training, AEDs, first aid, and readiness support, delivered on-site by a local team that picks up the phone.</p>
+        <p class="hero-lead">Practical safety systems for California operations — training, AEDs, First Aid, and readiness support, delivered on-site by a local team that picks up the phone.</p>
         <div class="hero-actions">
           <button class="btn-gold" onclick="showPage('contact')">Schedule a Site Walkthrough</button>
           <button class="btn-ghost" onclick="showPage('services')">See What We Do →</button>
         </div>
         <div class="hero-trust">
           <span class="hero-trust-item">Cal/OSHA Title 8</span>
-          <span class="hero-trust-item">AHA Certified</span>
+          <span class="hero-trust-item">Red Cross Certified</span>
           <span class="hero-trust-item">On-Site Service</span>
           <span class="hero-trust-item">Same-Day Response</span>
         </div>
@@ -2095,7 +2143,7 @@
   <!-- Trust Bar -->
   <div class="trust-bar">
     <div class="trust-bar-inner">
-      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-building"/></svg></div>Cal/OSHA Title 8</div>
+      <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-building"/></svg></div><span class="tooltip" tabindex="0" data-tooltip="California's workplace safety regulations under Title 8 of the California Code of Regulations. Stricter than federal OSHA — and what your California auditor will check against.">Cal/OSHA Title 8</span></div>
       <div class="trust-divider"></div>
       <div class="trust-item"><div class="trust-icon"><svg class="ic"><use href="#i-checkclip"/></svg></div>Audit-Ready Records</div>
       <div class="trust-divider"></div>
@@ -2168,7 +2216,7 @@
         <div class="pillar">
           <div class="pillar-icon"><svg class="ic"><use href="#i-tools"/></svg></div>
           <h3>One Partner. Five Service Lines.</h3>
-          <p>Training, first aid, AEDs, safety products, and ongoing support — one contact, one schedule, one audit trail. Not five vendors.</p>
+          <p>Training, First Aid, AEDs, safety products, and ongoing support — one contact, one schedule, one audit trail. Not five vendors.</p>
         </div>
       </div>
     </div>
@@ -2184,7 +2232,7 @@
         <div class="service-card" onclick="showPage('services')">
           <div class="service-card-icon"><svg class="ic"><use href="#i-cap"/></svg></div>
           <h3>Safety Training</h3>
-          <p>On-site CPR, First Aid, OSHA 10/30, and industry-specific certifications. Delivered at your facility. Records you can find when you need them.</p>
+          <p>On-site Red Cross-certified CPR, AED, and First Aid training plus OSHA 10/30 and industry-specific certifications. Delivered at your facility. Records you can find when you need them.</p>
           <span class="service-card-link">Training programs →</span>
         </div>
         <div class="service-card" onclick="showPage('services')">
@@ -2299,7 +2347,7 @@
         <div class="process-step">
           <div class="process-num">1</div>
           <h3>Site Walkthrough</h3>
-          <p>We come to your facility. Look at training records, AEDs, first aid cabinets, documentation. Surface the gaps. No commitment.</p>
+          <p>We come to your facility. Look at training records, AEDs, First Aid cabinets, documentation. Surface the gaps. No commitment.</p>
         </div>
         <div class="process-step">
           <div class="process-num">2</div>
@@ -2324,8 +2372,8 @@
   <section class="section icp-section">
     <div class="section-inner">
       <div class="section-label">Who We Serve</div>
-      <h2 class="section-title">Built for California operations<br>with 100–400 people.</h2>
-      <p class="section-sub">Large enough to have real Cal/OSHA exposure. Small enough that no one's built the safety infrastructure yet. That's exactly where we work best.</p>
+      <h2 class="section-title">Built for California operations —<br>from 25 employees up.</h2>
+      <p class="section-sub">Small enough to need a hands-on partner. Big enough to face real Cal/OSHA exposure. Whether you're a small operation or a multi-location facility, that's exactly where we work best.</p>
       <div class="icp-layout">
         <div class="icp-left">
           <h2>The operations we work best with</h2>
@@ -2341,7 +2389,7 @@
             <span class="icp-tag">Facility Services</span>
           </div>
           <div style="margin-top:24px;">
-            <span class="icp-size-badge">Sweet spot — 100–200 employees</span>
+            <span class="icp-size-badge">Operations from 25+ employees</span>
           </div>
         </div>
         <div>
@@ -2502,14 +2550,14 @@
         </div>
         <div>
           <div class="coverage-areas">
-            <div class="coverage-area-item"><div class="dot"></div><div><span>Santa Maria</span><small>Primary hub</small></div></div>
-            <div class="coverage-area-item"><div class="dot"></div><div><span>Bakersfield</span><small>Primary hub</small></div></div>
-            <div class="coverage-area-item"><div class="dot"></div><div><span>Central Valley</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Orange County</span><small>Primary hub</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Coachella Valley</span><small>Primary hub</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Santa Barbara</span><small>Full coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Ventura</span><small>Full coverage</small></div></div>
             <div class="coverage-area-item"><div class="dot"></div><div><span>Los Angeles</span><small>Metro coverage</small></div></div>
-            <div class="coverage-area-item"><div class="dot"></div><div><span>Orange County</span><small>Full coverage</small></div></div>
             <div class="coverage-area-item"><div class="dot"></div><div><span>Inland Empire</span><small>Full coverage</small></div></div>
             <div class="coverage-area-item"><div class="dot"></div><div><span>San Diego</span><small>Full coverage</small></div></div>
-            <div class="coverage-area-item"><div class="dot"></div><div><span>Border Region</span><small>Extended coverage</small></div></div>
+            <div class="coverage-area-item"><div class="dot"></div><div><span>Mexican Border</span><small>Extended coverage</small></div></div>
           </div>
           <div class="coverage-note">
             <strong>Cal/OSHA Title 8 isn't federal OSHA.</strong> We know the difference — and so will your auditors. Every program we build is to California standards because California is where we operate.
@@ -2538,7 +2586,7 @@
             <div class="footer-logo-sub">Workplace Safety · California</div>
           </div>
         </div>
-        <p class="footer-brand-desc">Practical workplace safety for California operations — training, AEDs, first aid, and ongoing support under one roof.</p>
+        <p class="footer-brand-desc">Practical workplace safety for California operations — training, AEDs, First Aid, and ongoing support under one roof.</p>
         <div class="footer-contact-row">
           <div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-phone"/></svg><a href="tel:7143944070">714.394.4070</a></div>
           <div><svg class="ic" style="width:14px;height:14px;margin-right:6px;opacity:0.7"><use href="#i-mail"/></svg><a href="mailto:sales@z3safety.com">sales@z3safety.com</a></div>
@@ -2567,17 +2615,17 @@
       <div>
         <div class="footer-col-title">Service Area</div>
         <ul class="footer-links">
-          <li><button class="footer-link">Santa Maria</button></li>
-          <li><button class="footer-link">Bakersfield</button></li>
-          <li><button class="footer-link">Greater Los Angeles</button></li>
-          <li><button class="footer-link">Orange County &amp; IE</button></li>
-          <li><button class="footer-link">San Diego &amp; Border</button></li>
+          <li><button class="footer-link">Orange County</button></li>
+          <li><button class="footer-link">Coachella Valley</button></li>
+          <li><button class="footer-link">Los Angeles</button></li>
+          <li><button class="footer-link">Inland Empire</button></li>
+          <li><button class="footer-link">San Diego</button></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">© 2026 Z3 Safety — Practical workplace safety, California operations</div>
-      <div class="footer-cert">Cal/OSHA Title 8 · AHA Certified · AED Vantage</div>
+      <div class="footer-cert">Cal/OSHA Title 8 · Red Cross Certified · AED Vantage</div>
     </div>
   </footer>
 </div>
@@ -2606,17 +2654,17 @@
             <span class="service-tag-pill">Workforce Readiness</span>
           </div>
           <div class="service-block-content">
-            <p>Most safety training fails because it's treated as a checkbox. We build training that creates real workforce readiness — structured, repeatable, and documented to Cal/OSHA standards. CPR/AED, OSHA 10 and 30, industry-specific. We bring it to your facility, on your schedule.</p>
+            <p>Most safety training fails because it's treated as a checkbox. We build training that creates real workforce readiness — Red Cross-certified, structured, and documented to Cal/OSHA standards. CPR/AED, First Aid, OSHA 10 and 30, industry-specific. We bring it to your facility, on your schedule.</p>
             <div class="service-features">
-              <div class="service-feature-item">CPR / AED Certification</div>
+              <div class="service-feature-item">Red Cross CPR / AED Certification</div>
+              <div class="service-feature-item">Red Cross First Aid Certification</div>
               <div class="service-feature-item">OSHA 10 &amp; 30</div>
-              <div class="service-feature-item">First Aid Responder</div>
+              <div class="service-feature-item">Heart Event Response</div>
               <div class="service-feature-item">Bloodborne Pathogens</div>
               <div class="service-feature-item">Lunch &amp; Learn Series</div>
               <div class="service-feature-item">Forklift / Lockout-Tagout</div>
               <div class="service-feature-item">On-site delivery</div>
               <div class="service-feature-item">Full documentation</div>
-              <div class="service-feature-item">Refresher tracking</div>
               <div class="service-feature-item">Cal/OSHA aligned</div>
             </div>
             <div class="service-highlight"><strong>The difference:</strong> Every training engagement includes documentation that meets Cal/OSHA recordkeeping — not just a sign-in sheet.</div>
@@ -2695,10 +2743,11 @@
             <span class="service-tag-pill">Ongoing Partnership</span>
           </div>
           <div class="service-block-content">
-            <p>Some operations need a safety partner, not a vendor. We offer ongoing workplace safety support — free walkthroughs, Emergency Action Plans, disaster planning, and advisory as your operation grows or California standards shift. This is where partnership becomes infrastructure.</p>
+            <p>Some operations need a safety partner, not a vendor. We offer ongoing workplace safety support — free walkthroughs, Emergency Action Plans, disaster preparedness products, and advisory as your operation grows or California standards shift. This is where partnership becomes infrastructure.</p>
             <div class="service-features">
               <div class="service-feature-item">Free on-site walkthroughs</div>
               <div class="service-feature-item">Emergency Action Plans</div>
+              <div class="service-feature-item">Disaster Preparedness Products</div>
               <div class="service-feature-item">Workplace disaster planning</div>
               <div class="service-feature-item">New business startup program</div>
               <div class="service-feature-item">Cal/OSHA regulation guidance</div>
@@ -2731,7 +2780,7 @@
       </div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li><li><button class="footer-link" onclick="showPage('services')">Safety Products</button></li></ul></div>
       <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li><li><button class="footer-link" onclick="showPage('contact')">Walkthrough</button></li></ul></div>
-      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Los Angeles</button></li><li><button class="footer-link">Orange County</button></li></ul></div>
+      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Orange County</button></li><li><button class="footer-link">Coachella Valley</button></li><li><button class="footer-link">Los Angeles</button></li><li><button class="footer-link">San Diego</button></li></ul></div>
     </div>
     <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div><div class="footer-cert">Cal/OSHA Title 8</div></div>
   </footer>
@@ -2869,7 +2918,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q" onclick="toggleFaq(this)"><span>What's your service territory?</span><div class="faq-q-icon">+</div></div>
-        <div class="faq-a">Central and Southern California — Santa Maria, Bakersfield, Greater Los Angeles, Orange County, Inland Empire, San Diego, and the border region. On-site service is what we do.</div>
+        <div class="faq-a">Central and Southern California, extending to the Mexican border. Primary hubs in Orange County and Coachella Valley, with full coverage across Santa Barbara, Ventura, Los Angeles, Inland Empire, and San Diego. On-site service is what we do.</div>
       </div>
     </div>
   </div>
@@ -2891,7 +2940,7 @@
       </div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li></ul></div>
       <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li></ul></div>
-      <div><div class="footer-col-title">Areas Served</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
+      <div><div class="footer-col-title">Areas Served</div><ul class="footer-links"><li><button class="footer-link">Orange County</button></li><li><button class="footer-link">Coachella Valley</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
     </div>
     <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div><div class="footer-cert">AED Vantage</div></div>
   </footer>
@@ -3003,7 +3052,7 @@
       <h2 class="section-title">Built on credentialed <em>expertise.</em></h2>
       <div class="cert-grid">
         <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-building"/></svg></div><h4>Cal/OSHA Title 8</h4><p>Programs built to California Title 8</p></div>
-        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-aed"/></svg></div><h4>AHA Certified</h4><p>American Heart Association CPR/AED</p></div>
+        <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-aed"/></svg></div><h4>Red Cross Certified</h4><p>American Red Cross CPR/AED training</p></div>
         <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-steth"/></svg></div><h4>Medical Direction</h4><p>Physician-overseen AED programs</p></div>
         <div class="cert-item"><div class="cert-icon"><svg class="ic"><use href="#i-cap"/></svg></div><h4>OSHA Outreach</h4><p>OSHA 10 &amp; 30 authorized training</p></div>
       </div>
@@ -3027,7 +3076,7 @@
       </div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('services')">Safety Training</button></li><li><button class="footer-link" onclick="showPage('services')">First Aid Service</button></li><li><button class="footer-link" onclick="showPage('aed')">AED Vantage</button></li></ul></div>
       <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><button class="footer-link" onclick="showPage('about')">About</button></li><li><button class="footer-link" onclick="showPage('contact')">Contact</button></li></ul></div>
-      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Santa Maria</button></li><li><button class="footer-link">Bakersfield</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
+      <div><div class="footer-col-title">Service Area</div><ul class="footer-links"><li><button class="footer-link">Orange County</button></li><li><button class="footer-link">Coachella Valley</button></li><li><button class="footer-link">Greater Southern CA</button></li></ul></div>
     </div>
     <div class="footer-bottom"><div class="footer-copy">© 2026 Z3 Safety</div></div>
   </footer>
@@ -3064,14 +3113,14 @@
       <div class="service-area">
         <h4>Primary Service Area</h4>
         <div class="service-tags">
-          <span class="service-tag">Santa Maria</span>
-          <span class="service-tag">Bakersfield</span>
-          <span class="service-tag">Central Valley</span>
-          <span class="service-tag">Los Angeles</span>
           <span class="service-tag">Orange County</span>
+          <span class="service-tag">Coachella Valley</span>
+          <span class="service-tag">Santa Barbara</span>
+          <span class="service-tag">Ventura</span>
+          <span class="service-tag">Los Angeles</span>
           <span class="service-tag">Inland Empire</span>
           <span class="service-tag">San Diego</span>
-          <span class="service-tag">Border Region</span>
+          <span class="service-tag">Mexican Border</span>
         </div>
       </div>
       <div class="post-submit-note">
