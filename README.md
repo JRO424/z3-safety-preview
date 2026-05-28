@@ -21,7 +21,7 @@ Static preview build for client review.
 - `llms.txt` for direct LLM consumption
 - Sitemap submitted via `robots.txt`
 - Canonical URL set
-- AggregateRating 5.0 / 10 reviews
+- AggregateRating 5.0 / 95 reviews
 
 ## Accessibility
 
@@ -53,7 +53,7 @@ Static preview build for client review.
 ## Notes for production handoff
 
 - Photography brief at top of `index.html` (HTML comments)
-- 10 placeholder Google Reviews — swap with real ones from Z3's Google Business profile
+- 10 real Google Reviews (verbatim from Z3's GBP, picked from 95 5-star reviews) — will be replaced by the live MarketPushApps widget once Diane connects the Google Business Profile
 - All emojis replaced with industrial SVG icons (inline sprite at top of body)
 
 — Built by Verk Vibe
