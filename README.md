@@ -1,17 +1,49 @@
 # Z3 Safety — Website Preview
 
-Preview build for client review.
+Static preview build for client review.
 
-**Live preview:** _link added after first deploy_
+**Live:** https://jro424.github.io/z3-safety-preview/
 
-## Contents
-- `index.html` — single-file preview build
+## Files
+
+- `index.html` — single-file preview build (all 5 pages)
 - `assets/z3-logo.png` — transparent shield logo
+- `assets/og-image.png` — 1200×630 social preview
+- `sitemap.xml` — XML sitemap
+- `robots.txt` — crawler rules (AI bots explicitly allowed)
+- `llms.txt` — LLM-friendly site summary (emerging standard)
 
-## Stack
-Static HTML + CSS + small inline JS. No build step. Open `index.html` in any browser locally.
+## SEO + AI visibility
+
+- Full Open Graph + Twitter Card meta
+- Geographic targeting (CA)
+- JSON-LD structured data: LocalBusiness, Organization, WebSite, 5× Service, FAQPage, BreadcrumbList, AggregateRating
+- `llms.txt` for direct LLM consumption
+- Sitemap submitted via `robots.txt`
+- Canonical URL set
+- AggregateRating 5.0 / 10 reviews
+
+## Accessibility
+
+- Skip-to-content link
+- `:focus-visible` styles
+- `prefers-reduced-motion` respected (marquee disables)
+- ARIA labels on nav, hero, icon-only buttons
+- `aria-current="page"` on active nav
+- WCAG AA contrast on all text
+- Form labels properly bound
+
+## Responsive breakpoints
+
+- ≤1024px — tablet adjustments
+- ≤880px — mobile hamburger nav kicks in
+- ≤480px — small phones
+- ≤360px — ultra-narrow
+
+`overflow-x: hidden` set on `html` and `body` to prevent any horizontal clipping.
 
 ## Pages
+
 - Home
 - Services (5 pillars)
 - AED Vantage (flagship program)
@@ -19,9 +51,9 @@ Static HTML + CSS + small inline JS. No build step. Open `index.html` in any bro
 - Contact
 
 ## Notes for production handoff
-- Photography brief documented at top of `index.html` (in HTML comments)
-- Google Reviews section has 10 placeholder reviews — swap with real ones from Z3's Google Business profile
-- All emojis replaced with industrial SVG icons via inline sprite
-- Mobile breakpoint at 880px
+
+- Photography brief at top of `index.html` (HTML comments)
+- 10 placeholder Google Reviews — swap with real ones from Z3's Google Business profile
+- All emojis replaced with industrial SVG icons (inline sprite at top of body)
 
 — Built by Verk Vibe
