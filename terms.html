@@ -1,0 +1,427 @@
+<!-- LEGAL REVIEW REQUIRED: This document was drafted as a starting template and has not been reviewed by counsel. Z3 Safety should have its attorney review and approve before deploying to z3safety.com. -->
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Terms of Use — Z3 Safety</title>
+  <meta name="description" content="Terms of use for the Z3 Safety website, including disclaimers about workplace safety training, AED program medical direction, and limitations of liability.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://z3safety.com/terms.html">
+  <link rel="icon" type="image/png" href="assets/z3-logo.png">
+  <meta name="theme-color" content="#0A0E14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0A0E14;
+      --ink-deep: #050810;
+      --gold: #D4A017;
+      --gold-bright: #E8B82E;
+      --gold-deep: #806208;
+      --gold-pale: #FBF4DE;
+      --white: #FFFFFF;
+      --off-white: #F5F6F8;
+      --gray-border: #E1E3E7;
+      --text: #111418;
+      --text-light: #4F5763;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Manrope', 'Inter', sans-serif;
+      color: var(--ink);
+      letter-spacing: -0.4px;
+    }
+    a { color: var(--gold-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    ::selection { background: var(--gold); color: var(--ink-deep); }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 0;
+      background: var(--gold); color: var(--ink-deep);
+      padding: 10px 18px; font-weight: 700; font-size: 14px;
+      text-decoration: none; z-index: 1000;
+    }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 3px; }
+
+    header.site {
+      background: rgba(10,14,20,0.96);
+      padding: 18px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: inline-flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo-text { font-family: 'Manrope'; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.1; }
+    .nav-logo-sub { font-size: 9.5px; color: var(--gold-bright); letter-spacing: 1.6px; text-transform: uppercase; margin-top: 4px; }
+    .nav-back {
+      color: rgba(255,255,255,0.78); font-size: 13.5px; font-weight: 600;
+      text-decoration: none; padding: 8px 16px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .nav-back:hover { background: rgba(255,255,255,0.08); color: white; }
+
+    .page-hero {
+      background: var(--ink);
+      padding: 64px 40px 56px;
+      border-bottom: 2px solid var(--gold);
+      color: white;
+    }
+    .page-hero-inner { max-width: 820px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--gold-bright); margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--gold-bright); }
+    .page-hero h1 {
+      font-size: 42px; font-weight: 800; color: white;
+      letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 14px;
+    }
+    .page-hero p { color: rgba(255,255,255,0.66); font-size: 16px; max-width: 640px; }
+
+    .effective {
+      max-width: 820px; margin: 32px auto 0;
+      padding: 16px 24px; background: var(--gold-pale);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      font-size: 14px; color: var(--ink);
+    }
+    .effective strong { color: var(--gold-deep); }
+
+    main { max-width: 820px; margin: 0 auto; padding: 40px 40px 80px; }
+    main h2 {
+      font-size: 24px; font-weight: 800;
+      margin-top: 44px; margin-bottom: 14px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--gray-border);
+    }
+    main h3 { font-size: 17px; font-weight: 700; margin-top: 28px; margin-bottom: 8px; color: var(--ink); }
+    main p { margin-bottom: 14px; color: var(--text); font-size: 16px; }
+    main ul, main ol { margin: 0 0 18px 24px; padding: 0; }
+    main li { margin-bottom: 8px; font-size: 16px; }
+    main strong { color: var(--ink); }
+
+    .lede {
+      font-size: 17.5px; color: var(--ink);
+      padding: 18px 22px;
+      background: var(--off-white);
+      border-left: 3px solid var(--ink);
+      margin-bottom: 32px;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout-warn {
+      padding: 20px 24px;
+      background: var(--gold-pale);
+      border-left: 3px solid var(--gold);
+      margin: 22px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 15.5px;
+    }
+    .callout-warn strong { color: var(--gold-deep); }
+    .uppercase-legal {
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 0.4px;
+      font-weight: 700;
+    }
+    .contact-block {
+      margin-top: 22px; padding: 22px 24px;
+      background: var(--ink); color: white;
+      border-radius: 6px;
+    }
+    .contact-block h3 { color: white; margin-top: 0; }
+    .contact-block a { color: var(--gold-bright); }
+    .contact-block p { color: rgba(255,255,255,0.78); margin-bottom: 6px; }
+
+    footer.site {
+      background: var(--ink-deep);
+      padding: 40px 40px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 16px;
+    }
+    .footer-links-row { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links-row a { color: rgba(255,255,255,0.7); font-size: 13px; text-decoration: none; }
+    .footer-links-row a:hover { color: var(--gold-bright); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 680px) {
+      header.site { padding: 14px 20px; }
+      .nav-logo img { height: 34px; }
+      .nav-logo-text { font-size: 14px; }
+      .page-hero { padding: 44px 20px 40px; }
+      .page-hero h1 { font-size: 30px; letter-spacing: -0.6px; }
+      main { padding: 28px 20px 60px; }
+      main h2 { font-size: 21px; }
+      footer.site { padding: 32px 20px 24px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site">
+    <a href="index.html" class="nav-logo" aria-label="Z3 Safety — home">
+      <img src="assets/z3-logo.png" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="nav-logo-text">Z3 SAFETY</div>
+        <div class="nav-logo-sub">Workplace Safety · California</div>
+      </div>
+    </a>
+    <a href="index.html" class="nav-back">← Back to site</a>
+  </header>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Legal</div>
+      <h1>Terms of Use</h1>
+      <p>The rules that govern your use of z3safety.com. Read them — especially the AED program and medical direction sections.</p>
+    </div>
+  </section>
+
+  <div class="effective" role="note">
+    <strong>Effective:</strong> May 28, 2026 &nbsp;·&nbsp; <strong>Last updated:</strong> May 28, 2026
+  </div>
+
+  <main id="main">
+    <p class="lede">
+      These Terms of Use ("Terms") govern your access to and use of the Z3 Safety website
+      at <a href="https://z3safety.com">z3safety.com</a> and any embedded or staged versions
+      of the same site (the "Site"). By using the Site you agree to these Terms. If you do
+      not agree, do not use the Site.
+    </p>
+
+    <h2>1. About Z3 Safety</h2>
+    <p>
+      Z3 Safety is a California workplace safety services company located at 5152 Bolsa
+      Avenue, Suite 102, Huntington Beach, CA 92649. We provide workplace safety training,
+      first aid program management, safety products and PPE, AED compliance and management
+      ("AED Vantage"), and on-site safety advisory services to business customers, primarily
+      in Central and Southern California.
+    </p>
+
+    <h2>2. Who can use the Site</h2>
+    <p>
+      The Site is intended for business users who are at least 18 years old and acting on
+      behalf of an employer. By using the Site you represent that you meet these
+      requirements and that any information you submit is accurate.
+    </p>
+
+    <h2>3. Informational use only — not a binding offer</h2>
+    <p>
+      Content on the Site is provided for general informational purposes only. Service
+      descriptions, pricing tiers, program structures, and timelines are subject to change
+      and are subject to a separate written agreement between Z3 Safety and the customer.
+      Nothing on the Site constitutes a binding offer to provide services, a quote, a
+      contract, or a guarantee of availability.
+    </p>
+
+    <h2>4. Intellectual property</h2>
+    <p>
+      The Site, including its text, graphics, logos, layout, photography, video, structured
+      data, and the "AED Vantage" program name and other Z3 Safety brand assets, is owned
+      by Z3 Safety or its licensors and is protected by United States and international
+      copyright, trademark, and other intellectual property laws.
+    </p>
+    <p>
+      You may view and print pages of the Site for your internal business reference. You
+      may not copy, modify, redistribute, frame, scrape, mirror, or use the Site or its
+      content for any commercial purpose without our prior written consent. Names and logos
+      of third-party certifying bodies and equipment manufacturers shown on the Site are
+      the property of their respective owners and are used for descriptive purposes only.
+    </p>
+
+    <h2>5. No medical advice</h2>
+    <div class="callout-warn">
+      <strong>Important.</strong> The Site, our training programs, and our written materials
+      are not medical advice and are not a substitute for licensed medical care, emergency
+      services, or a physician's judgment. Always call 911 in a medical emergency. Workplace
+      first aid training prepares responders to act before professional help arrives — it
+      does not replace professional help.
+    </div>
+
+    <h2>6. Training certifications</h2>
+    <p>
+      Z3 Safety facilitates training and certification programs offered by third-party
+      certifying organizations, which may include the American Heart Association, the
+      American Red Cross, OSHA-authorized outreach training programs, and similar bodies.
+      Certifications are issued by those certifying bodies, not by Z3 Safety, subject to
+      the certifying body's standards, expiration periods, and verification procedures.
+    </p>
+    <p>
+      Z3 Safety is not responsible for changes to a certifying body's curriculum, fees,
+      issuance procedures, or recognition by third parties (including employers, insurers,
+      regulators, and other states).
+    </p>
+
+    <h2>7. AED program and medical direction</h2>
+    <div class="callout-warn">
+      <strong>AED Vantage and AED program services.</strong> California law requires AED
+      programs to operate under the direction of a licensed physician acting as medical
+      director and to comply with California Health and Safety Code provisions governing
+      AED placement, inspection, training, and use. Z3 Safety's AED program services
+      include facilitation of medical direction provided by a licensed physician partner
+      acting under California medical regulations. Medical direction is provided by the
+      physician, not by Z3 Safety. Z3 Safety is not a medical provider, does not practice
+      medicine, and does not provide medical direction in its own name.
+    </div>
+    <p>
+      Customers remain responsible for: (a) ensuring their facilities, employees, and AED
+      placements meet applicable California Health and Safety Code requirements; (b)
+      notifying local Emergency Medical Services authorities of AED placements where
+      required; (c) maintaining their own internal records and post-event reporting; and
+      (d) following the manufacturer's instructions for any AED unit on their premises.
+    </p>
+
+    <h2>8. Service availability and scheduling</h2>
+    <p>
+      Services described on the Site are subject to availability, geographic service area,
+      scheduling, instructor and technician availability, and a written agreement covering
+      scope, pricing, and terms. Same-day or expedited response, where mentioned, depends
+      on conditions at the time of request and is not guaranteed unless committed in writing.
+    </p>
+
+    <h2>9. User submissions</h2>
+    <p>
+      If you submit information to us through the contact form, by email, or otherwise, you
+      represent that you have the right to share that information and that it is accurate.
+      You should not submit confidential, proprietary, or sensitive personal information
+      through the contact form. Our handling of personal information you submit is
+      described in our <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+    <h2>10. Prohibited conduct</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the Site in any way that violates applicable law or regulation</li>
+      <li>Use the Site to transmit malicious code, spam, or unsolicited commercial messages</li>
+      <li>Attempt to gain unauthorized access to any portion of the Site, its servers, or its data</li>
+      <li>Use any automated means (scraper, bot, crawler) to extract or harvest data, other than search engine indexing that respects the Site's robots directives</li>
+      <li>Misrepresent your identity, affiliation, or authority when contacting us</li>
+      <li>Use the Site to violate the rights of any third party</li>
+    </ul>
+
+    <h2>11. Third-party content and links</h2>
+    <p>
+      The Site may include links to third-party websites or embedded third-party content
+      (such as customer review widgets, map services, and font services). Z3 Safety does
+      not control and is not responsible for third-party content, products, services, or
+      practices.
+    </p>
+
+    <h2>12. Disclaimer of warranties</h2>
+    <p class="uppercase-legal">
+      The Site and its content are provided "as is" and "as available," without warranty
+      of any kind, express or implied, including without limitation warranties of
+      merchantability, fitness for a particular purpose, non-infringement, accuracy,
+      completeness, or uninterrupted availability. Z3 Safety does not warrant that the
+      Site will be error-free, secure, or free of harmful components. Your use of the
+      Site is at your own risk.
+    </p>
+
+    <h2>13. Limitation of liability</h2>
+    <p class="uppercase-legal">
+      To the maximum extent permitted by law, Z3 Safety and its owners, officers,
+      employees, contractors, and agents shall not be liable for any indirect, incidental,
+      special, consequential, exemplary, or punitive damages, or any loss of profits,
+      revenue, data, goodwill, or business opportunities, arising out of or related to
+      your use of the Site or these Terms, whether based on warranty, contract, tort
+      (including negligence), statute, or any other legal theory, even if Z3 Safety has
+      been advised of the possibility of such damages.
+    </p>
+    <p class="uppercase-legal">
+      Z3 Safety's total aggregate liability arising out of or related to the Site or these
+      Terms shall not exceed one hundred U.S. dollars (US $100). This limitation does not
+      apply to liability that cannot be limited under applicable law.
+    </p>
+    <p>
+      This Section 13 does not modify, limit, or expand any liability provisions contained
+      in a separate written services agreement between Z3 Safety and a customer. Those
+      provisions govern services delivered under such an agreement.
+    </p>
+
+    <h2>14. Indemnification</h2>
+    <p>
+      You agree to defend, indemnify, and hold harmless Z3 Safety and its owners, officers,
+      employees, and agents from and against any claims, damages, liabilities, costs, and
+      expenses (including reasonable attorneys' fees) arising out of or related to: (a)
+      your use of the Site; (b) your violation of these Terms; or (c) your violation of any
+      third-party right or applicable law in connection with your use of the Site.
+    </p>
+
+    <h2>15. Governing law and venue</h2>
+    <p>
+      These Terms are governed by the laws of the State of California, without regard to
+      its conflict of laws rules. Any dispute arising out of or related to the Site or
+      these Terms shall be brought exclusively in the state or federal courts located in
+      Orange County, California, and you consent to the personal jurisdiction of those
+      courts.
+    </p>
+
+    <h2>16. Termination</h2>
+    <p>
+      We may suspend or terminate your access to the Site at any time, for any reason,
+      without notice. The provisions of these Terms that by their nature should survive
+      termination will survive, including intellectual property, disclaimers, limitations
+      of liability, indemnification, and governing law.
+    </p>
+
+    <h2>17. Changes to these Terms</h2>
+    <p>
+      We may update these Terms from time to time. When we do, we will revise the "Last
+      updated" date at the top of this page. Material changes will be flagged on the Site
+      for a reasonable period after they take effect. Your continued use of the Site after
+      a change constitutes acceptance of the updated Terms.
+    </p>
+
+    <h2>18. Severability and entire agreement</h2>
+    <p>
+      If any provision of these Terms is held invalid or unenforceable, the remaining
+      provisions will remain in full force and effect. These Terms, together with the
+      <a href="privacy.html">Privacy Policy</a> and any separate written agreement between
+      you (or your employer) and Z3 Safety, constitute the entire agreement between you
+      and Z3 Safety regarding the Site.
+    </p>
+
+    <h2>19. Contact</h2>
+    <p>Questions about these Terms? Contact us:</p>
+    <div class="contact-block">
+      <h3>Z3 Safety</h3>
+      <p>5152 Bolsa Ave, Suite 102</p>
+      <p>Huntington Beach, CA 92649</p>
+      <p>Email: <a href="mailto:sales@z3safety.com">sales@z3safety.com</a></p>
+      <p>Phone: <a href="tel:+17143944070">714.394.4070</a></p>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 Z3 Safety — Practical workplace safety, California operations</div>
+      <div class="footer-links-row">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="accessibility.html">Accessibility</a>
+        <a href="do-not-sell.html">Do Not Sell or Share</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

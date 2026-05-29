@@ -2,14 +2,19 @@
 
 Static preview build for client review.
 
-**Live:** https://jro424.github.io/z3-safety-preview/
+**Live:** https://jro424.github.io/z3-safety-preview/ (iframed by https://z3safety.com)
+
+**Office:** 5152 Bolsa Ave Suite 102, Huntington Beach, CA 92649
+**Phone:** 714.394.4070
+**Email:** sales@z3safety.com
 
 ## Files
 
 - `index.html` — single-file preview build (all 5 pages)
+- `privacy.html`, `terms.html`, `accessibility.html`, `do-not-sell.html` — California legal disclosure pages (drafted 2026-05-28; counsel review required before publishing)
 - `assets/z3-logo.png` — transparent shield logo
 - `assets/og-image.png` — 1200×630 social preview
-- `sitemap.xml` — XML sitemap
+- `sitemap.xml` — XML sitemap (z3safety.com canonical)
 - `robots.txt` — crawler rules (AI bots explicitly allowed)
 - `llms.txt` — LLM-friendly site summary (emerging standard)
 

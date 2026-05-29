@@ -1,0 +1,309 @@
+<!-- LEGAL REVIEW REQUIRED: This document was drafted as a starting template and has not been reviewed by counsel. Z3 Safety should have its attorney review and approve before deploying to z3safety.com. -->
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Accessibility Statement — Z3 Safety</title>
+  <meta name="description" content="Z3 Safety's commitment to digital accessibility, WCAG 2.1 Level AA conformance, known limitations, and how to request assistance or report an issue.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://z3safety.com/accessibility.html">
+  <link rel="icon" type="image/png" href="assets/z3-logo.png">
+  <meta name="theme-color" content="#0A0E14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0A0E14;
+      --ink-deep: #050810;
+      --gold: #D4A017;
+      --gold-bright: #E8B82E;
+      --gold-deep: #806208;
+      --gold-pale: #FBF4DE;
+      --white: #FFFFFF;
+      --off-white: #F5F6F8;
+      --gray-border: #E1E3E7;
+      --text: #111418;
+      --text-light: #4F5763;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Manrope', 'Inter', sans-serif;
+      color: var(--ink);
+      letter-spacing: -0.4px;
+    }
+    a { color: var(--gold-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: var(--ink); }
+    ::selection { background: var(--gold); color: var(--ink-deep); }
+
+    .skip-link {
+      position: absolute; top: -100px; left: 0;
+      background: var(--gold); color: var(--ink-deep);
+      padding: 10px 18px; font-weight: 700; font-size: 14px;
+      text-decoration: none; z-index: 1000;
+    }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 3px; }
+
+    header.site {
+      background: rgba(10,14,20,0.96);
+      padding: 18px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: inline-flex; align-items: center; gap: 12px; color: white; text-decoration: none; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo-text { font-family: 'Manrope'; font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.1; }
+    .nav-logo-sub { font-size: 9.5px; color: var(--gold-bright); letter-spacing: 1.6px; text-transform: uppercase; margin-top: 4px; }
+    .nav-back {
+      color: rgba(255,255,255,0.78); font-size: 13.5px; font-weight: 600;
+      text-decoration: none; padding: 8px 16px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .nav-back:hover { background: rgba(255,255,255,0.08); color: white; }
+
+    .page-hero {
+      background: var(--ink);
+      padding: 64px 40px 56px;
+      border-bottom: 2px solid var(--gold);
+      color: white;
+    }
+    .page-hero-inner { max-width: 820px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--gold-bright); margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--gold-bright); }
+    .page-hero h1 {
+      font-size: 42px; font-weight: 800; color: white;
+      letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 14px;
+    }
+    .page-hero p { color: rgba(255,255,255,0.66); font-size: 16px; max-width: 640px; }
+
+    .effective {
+      max-width: 820px; margin: 32px auto 0;
+      padding: 16px 24px; background: var(--gold-pale);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      font-size: 14px; color: var(--ink);
+    }
+    .effective strong { color: var(--gold-deep); }
+
+    main { max-width: 820px; margin: 0 auto; padding: 40px 40px 80px; }
+    main h2 {
+      font-size: 24px; font-weight: 800;
+      margin-top: 44px; margin-bottom: 14px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--gray-border);
+    }
+    main h3 { font-size: 17px; font-weight: 700; margin-top: 28px; margin-bottom: 8px; color: var(--ink); }
+    main p { margin-bottom: 14px; color: var(--text); font-size: 16px; }
+    main ul, main ol { margin: 0 0 18px 24px; padding: 0; }
+    main li { margin-bottom: 8px; font-size: 16px; }
+    main strong { color: var(--ink); }
+    .lede {
+      font-size: 17.5px; color: var(--ink);
+      padding: 18px 22px;
+      background: var(--off-white);
+      border-left: 3px solid var(--ink);
+      margin-bottom: 32px;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout {
+      padding: 18px 22px;
+      background: var(--gold-pale);
+      border-left: 3px solid var(--gold);
+      margin: 22px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 15.5px;
+    }
+    .contact-block {
+      margin-top: 22px; padding: 22px 24px;
+      background: var(--ink); color: white;
+      border-radius: 6px;
+    }
+    .contact-block h3 { color: white; margin-top: 0; }
+    .contact-block a { color: var(--gold-bright); }
+    .contact-block p { color: rgba(255,255,255,0.78); margin-bottom: 6px; }
+
+    footer.site {
+      background: var(--ink-deep);
+      padding: 40px 40px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; align-items: center;
+      gap: 16px;
+    }
+    .footer-links-row { display: flex; flex-wrap: wrap; gap: 18px; }
+    .footer-links-row a { color: rgba(255,255,255,0.7); font-size: 13px; text-decoration: none; }
+    .footer-links-row a:hover { color: var(--gold-bright); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 680px) {
+      header.site { padding: 14px 20px; }
+      .nav-logo img { height: 34px; }
+      .nav-logo-text { font-size: 14px; }
+      .page-hero { padding: 44px 20px 40px; }
+      .page-hero h1 { font-size: 30px; letter-spacing: -0.6px; }
+      main { padding: 28px 20px 60px; }
+      main h2 { font-size: 21px; }
+      footer.site { padding: 32px 20px 24px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site">
+    <a href="index.html" class="nav-logo" aria-label="Z3 Safety — home">
+      <img src="assets/z3-logo.png" alt="" onerror="this.style.display='none'">
+      <div>
+        <div class="nav-logo-text">Z3 SAFETY</div>
+        <div class="nav-logo-sub">Workplace Safety · California</div>
+      </div>
+    </a>
+    <a href="index.html" class="nav-back">← Back to site</a>
+  </header>
+
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="eyebrow">Accessibility</div>
+      <h1>Accessibility Statement</h1>
+      <p>Z3 Safety is committed to a website that works for everyone. Here's what we've done, what we know we still need to fix, and how to reach us if something gets in your way.</p>
+    </div>
+  </section>
+
+  <div class="effective" role="note">
+    <strong>Effective:</strong> May 28, 2026 &nbsp;·&nbsp; <strong>Last updated:</strong> May 28, 2026
+  </div>
+
+  <main id="main">
+    <p class="lede">
+      Z3 Safety is committed to making z3safety.com usable by the widest possible audience,
+      including people with disabilities. We design and review the Site against the Web
+      Content Accessibility Guidelines (WCAG) 2.1, Level AA, published by the W3C.
+    </p>
+
+    <h2>1. Conformance status</h2>
+    <p>
+      <strong>Z3 Safety targets WCAG 2.1 Level AA conformance.</strong> "Targets" means we
+      have designed the Site against those criteria and continue to test and remediate
+      against them. Some content — particularly third-party embeds described in Section 4 —
+      may not yet fully conform. We treat WCAG 2.1 AA as the standard we measure ourselves
+      against and work to maintain.
+    </p>
+
+    <h2>2. What we've built into the Site</h2>
+    <ul>
+      <li>Keyboard navigation for primary navigation, forms, and interactive controls</li>
+      <li>Skip-to-content links on each policy page</li>
+      <li>Visible focus indicators that meet WCAG contrast guidance</li>
+      <li>Semantic HTML structure with proper heading hierarchy</li>
+      <li>Alt text on meaningful images and decorative-image conventions for non-essential graphics</li>
+      <li>Color contrast tested against the WCAG AA 4.5:1 standard for body text and 3:1 for large text and non-text UI</li>
+      <li>Respect for the user's <code>prefers-reduced-motion</code> setting, which disables non-essential motion</li>
+      <li>Responsive layout that supports text resizing up to 200% without loss of content or function</li>
+      <li>Form fields with associated labels and error messaging</li>
+    </ul>
+
+    <h2>3. How we test</h2>
+    <p>Z3 Safety uses a combination of:</p>
+    <ul>
+      <li><strong>Manual review</strong> against WCAG 2.1 Level AA success criteria during design and before publishing</li>
+      <li><strong>Automated testing</strong> with standard accessibility scanners during build</li>
+      <li><strong>Keyboard-only navigation testing</strong> on primary user flows (contact form, AED program pages, service pages)</li>
+      <li><strong>Mobile and screen-reader spot checks</strong> on iOS VoiceOver and macOS VoiceOver</li>
+    </ul>
+
+    <h2>4. Known limitations</h2>
+    <div class="callout">
+      We are transparent about where the Site falls short. We are working to remediate the
+      following:
+    </div>
+    <ul>
+      <li>
+        <strong>Third-party review widget.</strong> The customer reviews widget embedded on
+        the Site (MarketPushApps) is delivered by a third party and may not fully conform
+        to WCAG 2.1 AA. The underlying review content is also available in plain text on
+        request — contact us using the methods below.
+      </li>
+      <li>
+        <strong>Embedded fonts.</strong> The Site loads typefaces from Google Fonts. If
+        Google Fonts is unavailable, the Site falls back to system fonts that remain
+        legible.
+      </li>
+      <li>
+        <strong>Iframe embedding.</strong> The Site is presented inside a Wix Studio iframe
+        on z3safety.com. Some assistive-technology behaviors may depend on the host page's
+        markup, which is outside Z3 Safety's direct control.
+      </li>
+      <li>
+        <strong>Third-party PDFs and documents.</strong> Some documents we link to (for
+        example, certifying-body fact sheets or Cal/OSHA publications) are produced by
+        third parties and may have varying accessibility quality. We will provide an
+        accessible alternative on request.
+      </li>
+    </ul>
+
+    <h2>5. California and federal frameworks we consider</h2>
+    <p>In addition to WCAG 2.1 Level AA, Z3 Safety considers the following legal frameworks when evaluating accessibility:</p>
+    <ul>
+      <li><strong>Americans with Disabilities Act (ADA) Title III</strong> — federal law prohibiting disability discrimination by places of public accommodation, which courts have applied to commercial websites that connect to physical services.</li>
+      <li><strong>California Unruh Civil Rights Act</strong> — California Civil Code §§ 51 et seq., which prohibits discrimination in business establishments and has been applied to website accessibility for California-facing businesses.</li>
+    </ul>
+
+    <h2>6. Feedback and accommodation requests</h2>
+    <p>
+      If you encounter an accessibility barrier on z3safety.com, need an alternative format
+      of a document, or need help completing the contact form, please tell us. We will
+      acknowledge your request promptly and work with you on a reasonable resolution.
+    </p>
+    <div class="contact-block">
+      <h3>Accessibility Contact</h3>
+      <p>Email: <a href="mailto:sales@z3safety.com">sales@z3safety.com</a></p>
+      <p>Phone: <a href="tel:+17143944070">714.394.4070</a></p>
+      <p>Mail: 5152 Bolsa Ave, Suite 102, Huntington Beach, CA 92649</p>
+      <p style="margin-top:12px;">
+        Please include a description of the problem, the page URL, the device and browser
+        you were using, and how to reach you. If you need information in an alternative
+        format (large print, plain HTML, audio), tell us what format works for you and we
+        will do our best to provide it.
+      </p>
+    </div>
+
+    <h2>7. Date and review cadence</h2>
+    <p>
+      This Accessibility Statement was last updated on May 28, 2026. We review it at least
+      annually and whenever the Site undergoes a significant redesign.
+    </p>
+  </main>
+
+  <footer class="site">
+    <div class="footer-inner">
+      <div class="footer-copy">© 2026 Z3 Safety — Practical workplace safety, California operations</div>
+      <div class="footer-links-row">
+        <a href="index.html">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="accessibility.html">Accessibility</a>
+        <a href="do-not-sell.html">Do Not Sell or Share</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

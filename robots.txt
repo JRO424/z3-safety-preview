@@ -32,4 +32,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://jro424.github.io/z3-safety-preview/sitemap.xml
+Sitemap: https://z3safety.com/sitemap.xml
